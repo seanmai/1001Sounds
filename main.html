@@ -3,23 +3,58 @@
     <head>
         <meta charset="utf-8">
         <title></title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function(event) {
+                (function ($) {
+                    $.fn.scembed = function(){
+                    var datasource  = 'http://soundcloud.com/oembed';
+                    return this.each(function () {
+                        var container = $(this);
+                        var mediasource = $(container).attr("sc_url");
+                        var params = 'url=' + mediasource + '&format=json&iframe=true&maxwidth=480&maxheight=120&auto_play=false&show_comments=false';
+                        $.ajaxopts = $.extend($.ajaxopts, {
+                                            url: datasource,
+                                            data: params,
+                                            dataType: 'json',
+                                            success: function (data, status, raw) {
+                                                $(container).html(data.html);
+                                            },
+                                            error: function (data, e1, e2) {
+                                                $(container).html("Can't retrieve player for " + mediasource);
+                                            },
+                                        });
+                        $.ajax($.ajaxopts);
+                        });
+                    };
+                })(jQuery);
+
+                $(function(){
+                    $("div.sc-embed").scembed();
+                });
+            });
+        </script>
     </head>
     <body>
         <h1>Hello</h1>
-        <iframe width="80%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/451177821&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+        <div class="sc-embed" sc_url="https://soundcloud.com/feels_newkd/gryffin-edc-las-vegas-2018"></div>
 
-
-        <script src="https://connect.soundcloud.com/sdk/sdk-3.3.1.js"></script>
-        <script>
-        SC.initialize({
-          client_id: '2t9loNQH90kzJcsFCODdigxfp325aq4z'
-        });
-
-        var track_url = 'https://soundcloud.com/feels_newkd/gryffin-edc-las-vegas-2018';
-        SC.oEmbed(track_url, { auto_play: true }).then(function(oEmbed) {
-          console.log('oEmbed response: ', oEmbed);
-        });
-        </script>
     </body>
 
 </html>
+
+
+<!-- <iframe width="80%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/451177821&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+
+
+<script src="https://connect.soundcloud.com/sdk/sdk-3.3.1.js"></script>
+<script>
+    SC.initialize({
+        client_id: '2t9loNQH90kzJcsFCODdigxfp325aq4z'
+    });
+
+    var track_url = 'https://soundcloud.com/feels_newkd/gryffin-edc-las-vegas-2018';
+    SC.oEmbed(track_url, { auto_play: true }).then(function(oEmbed) {
+        console.log('oEmbed response: ', oEmbed);
+    });
+</script> -->
