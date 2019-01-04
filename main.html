@@ -52,6 +52,8 @@
             </div>
         <!-- </form> -->
 
+        <span class="timestamp">10:00</span>
+
         <script type="text/javascript">
             var embededPlayer = document.querySelector('iframe');
             var widget = SC.Widget(embededPlayer);
@@ -70,6 +72,23 @@
                 document.querySelector('iframe').src = (playerurl+url+params);
               }
             });
+        </script>
+        <script type="text/javascript">
+            // Add event listener on timestamps
+            document.querySelectorAll(".timestamp").forEach(function(ts) {
+        		ts.addEventListener("click", seekTime);
+        	});
+
+            function seekTime(){
+                var timeMinSec = this.innerHTML.split(":");
+                var timeMilli = 0;
+                var toMilliSec = 1000
+                for(var i = timeMinSec.length - 1; i >= 0; i--){
+                    timeMilli += parseInt(timeMinSec[i])*toMilliSec;
+                    toMilliSec *= 60;
+                }
+                widget.seekTo(timeMilli);
+            }
         </script>
     </body
 </html>
