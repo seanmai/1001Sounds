@@ -36,6 +36,7 @@ SC.stream('tracks/553134150').then(function(currentTrack){
 
 var isPlaying = false;
 var currentTime = 0;
+var interval = 0;
 
 chrome.runtime.onMessage.addListener(receiver);
 
@@ -44,17 +45,19 @@ function receiver(request, sender, sendResponse){
         if(!isPlaying){
             SC.currentTrack.play();
             isPlaying = true;
-            var interval = setInterval(updateTime, 100);
-            //sendResponse to what new button should be
+            interval = setInterval(updateTime, 100);
+            //sendResponse to sender
             sendResponse();
         } else{
             SC.currentTrack.pause();
             isPlaying = false;
             clearInterval(interval);
+            interval = 0;
             sendResponse();
         }
     }
 }
+
 
 function updateTime(){
     if(SC.currentTrack){
