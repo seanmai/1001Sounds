@@ -3,22 +3,27 @@ var SC=SC||{};SC.Widget=function(n){function t(r){if(e[r])return e[r].exports;va
 var bgPage = chrome.extension.getBackgroundPage();
 var playButton = document.querySelector(".pause-play button span");
 
-setInterval(function(){
-    if((playButton.className == ("glyphicon glyphicon-play")) && (bgPage.isPlaying == true)){
-        playButton.className = "glyphicon glyphicon-pause";
-    } else if((playButton.className == ("glyphicon glyphicon-pause")) && (bgPage.isPlaying == false)){
-        playButton.className = "glyphicon glyphicon-play";
-    }
-    // console.log(bgPage.currentTime);
-    console.log(bgPage.isPlaying);
-}, 100);
-
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("POPUP.js");
     document.querySelector('#play').addEventListener("click", play);
     console.log(document.querySelector('#player'));
 });
+
+
+//Controller set scrubber and button status
+//Kind of janky if statements --some repetition to clean up
+setInterval(function(){
+    if(bgPage.isPlaying){
+        console.log(bgPage.currentTime);
+    }
+    if((playButton.className == ("glyphicon glyphicon-play")) && (bgPage.isPlaying == true)){
+        playButton.className = "glyphicon glyphicon-pause";
+    } else if((playButton.className == ("glyphicon glyphicon-pause")) && (bgPage.isPlaying == false)){
+        playButton.className = "glyphicon glyphicon-play";
+    }
+}, 100);
+
 
 function play(){
     let message = "play"
@@ -29,7 +34,6 @@ function play(){
 function setButton(button){
     document.querySelector('#play').innerHTML = button;
 }
-
 
 
 var embededPlayer = document.querySelector('iframe');
