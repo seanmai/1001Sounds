@@ -54,6 +54,7 @@
         <p><span class="timestamp">1:00:10</span></p>
 
         <button id="play">Play</button>
+        <button class="btn">GET REQUEST</button>
         <script>
             SC.initialize({
                 client_id: '175c043157ffae2c6d5fed16c3d95a4c'
@@ -107,9 +108,27 @@
         		});
             });
         </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                const URL = 'https://api.soundcloud.com/resolve.json?url=https://soundcloud.com/neszlo/lonely-nights-anniversary-mix&client_id=175c043157ffae2c6d5fed16c3d95a4c';
+                $('.btn').click(function(){
+                    $.ajax({
+                        url: URL,
+                        type: "GET",
+                        success: function(result){
+                            console.log(result.id);
+                        },
+                        error: function(error){
+                            console.log('Error ${error}')
+                        }
+                    })
+                })
+            })
+        </script>
     </body
 </html>
 
+<!-- https://api.soundcloud.com/resolve.json?url=https://soundcloud.com/neszlo/lonely-nights-anniversary-mix&client_id=175c043157ffae2c6d5fed16c3d95a4c -->
 <!--    STILL TO DO
         Convert to full stack node project
         Webscrape timestamps and track names
