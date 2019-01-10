@@ -2,7 +2,8 @@ var SC=SC||{};SC.Widget=function(n){function t(r){if(e[r])return e[r].exports;va
 
 var bgPage = chrome.extension.getBackgroundPage();
 var playButton = document.querySelector(".pause-play button span");
-
+var progressBar = document.querySelector(".progressBar");
+var progressIndicator = document.querySelector(".progressIndicator");
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("POPUP.js");
@@ -30,11 +31,6 @@ function play(){
     chrome.runtime.sendMessage(message, function(response){
     });
 }
-
-function setButton(button){
-    document.querySelector('#play').innerHTML = button;
-}
-
 
 var embededPlayer = document.querySelector('iframe');
 var widget = SC.Widget(embededPlayer);
