@@ -103,8 +103,9 @@
         </script>
         <script type="text/javascript">
             document.querySelector('button').addEventListener('click', function() {
-        		SC.stream('tracks/553134150').then(function(player){
-        	  		player.play();
+        		SC.stream('tracks/553134150').then(function(currentTrack){
+        	  		SC.currentTrack = currentTrack;
+                    SC.currentTrack.play();
         		});
             });
         </script>
