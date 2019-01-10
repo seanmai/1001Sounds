@@ -47,12 +47,12 @@ function receiver(request, sender, sendResponse){
             isPlaying = true;
             // var interval = setInterval(updateTime, 100);
             //sendResponse to what new button should be
-            sendResponse("Pause");
+            sendResponse();
         } else{
             SC.currentTrack.pause();
             isPlaying = false;
             // clearInterval(interval);
-            sendResponse("Play");
+            sendResponse();
         }
     }
 }
