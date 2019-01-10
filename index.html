@@ -5,10 +5,26 @@
         <title></title>
         <script src="soundcloud-3.3.1.js"></script>
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="popup.css">
     </head>
     <body>
         <h1>Hello</h1>
-        <button id="play">Play</button>
+        <div class="controller">
+            <div class="pause-play">
+                <button type="button" class="btn btn-default" id="play">
+                    <span class="glyphicon glyphicon-play"></span>
+                </button>
+            </div>
+            <div class="progressBar">
+                <div class="timeline">
+
+                </div>
+                <div class="scrubber">
+
+                </div>
+            </div>
+        </div>
         <iframe width="500" height="166" scrolling="no" frameborder="no"src="http://w.soundcloud.com/player/?url=https://soundcloud.com/feels_newkd/gryffin-edc-las-vegas-2018&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
 
         <script type="text/javascript" src="popup.js"></script>

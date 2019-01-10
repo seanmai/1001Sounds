@@ -35,7 +35,7 @@ SC.stream('tracks/553134150').then(function(currentTrack){
 });
 
 var isPlaying = false;
-// window. to make global; change later to something better
+// window. to make global --change later to something better
 var currentTime = 0;
 
 chrome.runtime.onMessage.addListener(receiver);
@@ -56,7 +56,10 @@ function receiver(request, sender, sendResponse){
         }
     }
 }
-
+setInterval(updateTime, 100);
 function updateTime(){
-    currentTime = SC.currentTrack.getPosition();
+    if(SC.currentTrack){
+        currentTime = SC.currentTrack.currentTime();
+    }
+    console.log(currentTime);
 }
