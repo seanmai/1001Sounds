@@ -38,12 +38,21 @@ SC.stream('tracks/553134150').then(function(currentTrack){
     SC.currentTrack = currentTrack;
 });
 
+var isPlaying = false;
+
 chrome.runtime.onMessage.addListener(receiver);
 
 function receiver(request, sender, sendResponse){
     if(request == "play"){
-        SC.currentTrack.play();
-    } else if(request == pause){
-        SC.currentTrack.pause();
+        if(!isPlaying){
+            SC.currentTrack.play();
+            isPlaying = true;
+            //sendResponse to what new button should be
+            sendResponse("Pause");
+        } else{
+            SC.currentTrack.pause();
+            isPlaying = false;
+            sendResponse("Play");
+        }
     }
 }

@@ -6,12 +6,18 @@
 // });
 document.addEventListener('DOMContentLoaded', function() {
     console.log("POPUP.js");
-    document.querySelector('#player').addEventListener("click", play);
+    document.querySelector('#play').addEventListener("click", play);
     console.log(document.querySelector('#player'));
 });
 
 function play(){
     let message = "play"
     console.log(message);
-    chrome.runtime.sendMessage(message);
+    chrome.runtime.sendMessage(message, function(response){
+        setButton(response);
+    });
+}
+
+function setButton(button){
+    document.querySelector('#play').innerHTML = button;
 }
