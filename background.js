@@ -40,6 +40,10 @@ SC.stream('tracks/553134150').then(function(currentTrack){
 
 chrome.runtime.onMessage.addListener(receiver);
 
-function receiver(message, sender, sendResponse){
-    console.log(message);
+function receiver(request, sender, sendResponse){
+    if(request == "play"){
+        SC.currentTrack.play();
+    } else if(request == pause){
+        SC.currentTrack.pause();
+    }
 }

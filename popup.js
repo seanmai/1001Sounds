@@ -4,13 +4,14 @@
 //         SC.currentTrack.play();
 //     });
 // });
-var message = null;
-
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("POPUP.js");
     document.querySelector('#player').addEventListener("click", play);
+    console.log(document.querySelector('#player'));
 });
 
 function play(){
-    message = "play";
+    let message = "play"
+    console.log(message);
     chrome.runtime.sendMessage(message);
 }
