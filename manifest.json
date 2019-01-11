@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "1001Sounds",
     "version": "0.1",
-    "content_security_policy": "script-src 'self' https://*.soundcloud.com; object-src 'self'",
+    "content_security_policy": "script-src 'self' https://*.jquery.com; object-src 'self'",
     "content_scripts": [
         {
             "matches": [
