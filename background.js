@@ -68,6 +68,19 @@ function receiver(request, sender, sendResponse){
             //sendResponse to sender
             sendResponse();
         }
+    } else if(request.includes("http")){
+        const URL = "https://api.soundcloud.com/resolve.json?url=" + request + "&client_id=175c043157ffae2c6d5fed16c3d95a4c";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            success: function(result){
+                console.log(result);
+                // console.log(result.id);
+            },
+            error: function(error){
+                console.log('Error ${error}')
+            }
+        })
     }
 }
 

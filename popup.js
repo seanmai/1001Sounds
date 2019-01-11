@@ -5,7 +5,14 @@ var bgPage = chrome.extension.getBackgroundPage();
 var playButton = document.querySelector(".pause-play button span");
 var progressBar = document.querySelector(".progressBar");
 var progressIndicator = document.querySelector(".progressIndicator");
-var fractionPlayed = fractionPlayed = bgPage.currentTime / bgPage.totalDuration;;
+var fractionPlayed = fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
+
+var getURLTest = document.querySelector(".btn");
+getURLTest.addEventListener("click", function(){
+    let message = "https://soundcloud.com/jvna/dearly-beloved-x-sweater-weather-jvna-remix";
+    chrome.runtime.sendMessage(message, function(response){
+    });
+})
 
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#play').addEventListener("click", play);
@@ -29,9 +36,7 @@ function progressBarLoop(){
     //     console.log(divOffset);
     // });
     setInterval(function(){
-
             fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
-            // console.log(fractionPlayed);
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
 
     }, 100);
@@ -39,6 +44,12 @@ function progressBarLoop(){
 
 function play(){
     let message = "play"
+    chrome.runtime.sendMessage(message, function(response){
+    });
+}
+
+function sendURL(){
+    let message = "";
     chrome.runtime.sendMessage(message, function(response){
     });
 }

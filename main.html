@@ -112,13 +112,16 @@
         <!-- FUNCTION TO GET TRACK DETAILS -->
         <script type="text/javascript">
             $(document).ready(function(){
-                const URL = 'https://api.soundcloud.com/resolve.json?url=https://soundcloud.com/neszlo/lonely-nights-anniversary-mix&client_id=175c043157ffae2c6d5fed16c3d95a4c';
+                // const URL = 'https://api.soundcloud.com/resolve.json?url=https://soundcloud.com/neszlo/lonely-nights-anniversary-mix&client_id=175c043157ffae2c6d5fed16c3d95a4c';
+                const URL = 'https://api.soundcloud.com/resolve.json?url=https://soundcloud.com/jvna/dearly-beloved-x-sweater-weather-jvna-remix&client_id=175c043157ffae2c6d5fed16c3d95a4c';
+
                 $('.btn').click(function(){
                     $.ajax({
                         url: URL,
                         type: "GET",
                         success: function(result){
-                            console.log(result.id);
+                            console.log(result);
+                            // console.log(result.id);
                         },
                         error: function(error){
                             console.log('Error ${error}')
