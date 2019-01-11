@@ -29,10 +29,8 @@ function progressBarLoop(){
     // });
     setInterval(function(){
         if(bgPage.isPlaying){
-            console.log(bgPage.currentTime);
-            console.log(bgPage.totalDuration);
             var fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
-            // console.log(fractionPlayed);
+            console.log(fractionPlayed);
         }
     }, 100);
 }

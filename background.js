@@ -40,6 +40,8 @@ SC.initialize({
 SC.stream('tracks/553134150').then(function(currentTrack){
     SC.currentTrack = currentTrack;
     SC.currentTrack.play();
+    isPlaying = true;
+    interval = setInterval(updateTime, 100);
     //Track needs time to load before can getDuration
     setTimeout(function(){
         totalDuration = SC.currentTrack.getDuration();
@@ -52,17 +54,17 @@ chrome.runtime.onMessage.addListener(receiver);
 
 function receiver(request, sender, sendResponse){
     if(request == "play"){
-        if(!isPlaying){
-            SC.currentTrack.play();
-            isPlaying = true;
-            interval = setInterval(updateTime, 100);
-            //sendResponse to sender
-            sendResponse();
-        } else{
+        if(isPlaying){
             SC.currentTrack.pause();
             isPlaying = false;
             clearInterval(interval);
             interval = 0;
+            sendResponse();
+        } else{
+            SC.currentTrack.play();
+            isPlaying = true;
+            interval = setInterval(updateTime, 100);
+            //sendResponse to sender
             sendResponse();
         }
     }
