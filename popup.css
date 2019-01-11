@@ -60,6 +60,18 @@ a:hover{
     float: left;
     margin: 0 10px;
 }
+
+.track-controls {
+    height: 100%;
+    width: 70px;
+    float: left;
+}
+
+.controller-btn {
+    border: none;
+    height: 100%;
+}
+
 .progressBar {
     height: 100%;
     width: 430px;

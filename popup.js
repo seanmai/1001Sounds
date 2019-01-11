@@ -2,7 +2,7 @@ var SC=SC||{};SC.Widget=function(n){function t(r){if(e[r])return e[r].exports;va
 
 
 var bgPage = chrome.extension.getBackgroundPage();
-var playButton = document.querySelector(".pause-play button span");
+var playButton = document.querySelector(".track-controls #play span");
 var progressBar = document.querySelector(".progressBar");
 var progressPlayed = document.querySelector(".current-time");
 var progressIndicator = document.querySelector(".progressIndicator");
