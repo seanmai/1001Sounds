@@ -7,12 +7,14 @@ var progressBar = document.querySelector(".progressBar");
 var progressIndicator = document.querySelector(".progressIndicator");
 var fractionPlayed = fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
 
+// TEST CODE DELETE LATER
 var getURLTest = document.querySelector(".btn");
 getURLTest.addEventListener("click", function(){
     let message = "https://soundcloud.com/jvna/dearly-beloved-x-sweater-weather-jvna-remix";
     chrome.runtime.sendMessage(message, function(response){
     });
 })
+// 
 
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#play').addEventListener("click", play);
