@@ -32,7 +32,6 @@ var currentTime = 0;
 var totalDuration = 0;
 var interval = 0;
 
-
 // SC.initialize({
 //     client_id: '175c043157ffae2c6d5fed16c3d95a4c'
 // });

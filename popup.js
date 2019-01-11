@@ -7,19 +7,30 @@ var progressBar = document.querySelector(".progressBar");
 var progressIndicator = document.querySelector(".progressIndicator");
 var fractionPlayed = fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
 
-// TEST CODE DELETE LATER
-var getURLTest = document.querySelector(".btn");
-getURLTest.addEventListener("click", function(){
-    let message = "https://soundcloud.com/jvna/dearly-beloved-x-sweater-weather-jvna-remix";
-    chrome.runtime.sendMessage(message, function(response){
-    });
-})
-// 
+// Parses URL and sends to background for GET request handling
+var inputURL = document.querySelector('#URL');
+inputURL.addEventListener('keypress', function(e){
+    var key = e.which || e.keyCode;
+    if (key === 13) { // 13 is enter
+        let message = inputURL.value;
+        inputURL.value = "";
+        chrome.runtime.sendMessage(message, function(response){
+            console.log(response);
+        });
+    }
+});
 
+
+// Handles play button click
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#play').addEventListener("click", play);
 });
 
+function play(){
+    let message = "play"
+    chrome.runtime.sendMessage(message, function(response){
+    });
+}
 
 //Controller set scrubber and button status
 //Kind of janky if statements --some repetition to clean up
@@ -42,18 +53,6 @@ function progressBarLoop(){
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
 
     }, 100);
-}
-
-function play(){
-    let message = "play"
-    chrome.runtime.sendMessage(message, function(response){
-    });
-}
-
-function sendURL(){
-    let message = "";
-    chrome.runtime.sendMessage(message, function(response){
-    });
 }
 
 var embededPlayer = document.querySelector('iframe');
