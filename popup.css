@@ -1,7 +1,21 @@
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.extension-container{
+    width: 550px;
+}
+
 .track-info{
-    width: 500px;
+    width: 100%;
     height: 50px;
     margin: 5px;
+    color: #777;
 }
 
 .artwork {
@@ -36,7 +50,7 @@
 }
 
 .controller {
-    width: 500px;
+    width: 100%;
     height: 34px;
     background: black;
 }
@@ -50,23 +64,39 @@
     height: 100%;
     width: 430px;
     float: left;
-    background: pink;
+    background: white;
+}
+.progressBar:hover .progressIndicator{
+    opacity: 1;
 }
 
 .timeline {
     border-style: solid;
     top: 50%;
+    width: 438px;
+    color: #ccc;
+    position: relative;
+    border-width: 0.5px;
+}
+
+.current-time {
+    border-style: solid;
+    top: 48%;
+    width: 0;
+    color: chocolate;
     position: relative;
     border-width: 0.5px;
 }
 
 .progressIndicator {
+    opacity: 0;
+    transition: 0.15s;
     background: chocolate;
     height: 8px;
     width: 8px;
     position: relative;
     border: 2px solid chocolate;
     border-radius: 25px;
-    top: 12.5px;
+    top: 11.5px;
     left: 0%;
 }

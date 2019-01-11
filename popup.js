@@ -4,6 +4,7 @@ var SC=SC||{};SC.Widget=function(n){function t(r){if(e[r])return e[r].exports;va
 var bgPage = chrome.extension.getBackgroundPage();
 var playButton = document.querySelector(".pause-play button span");
 var progressBar = document.querySelector(".progressBar");
+var progressPlayed = document.querySelector(".current-time");
 var progressIndicator = document.querySelector(".progressIndicator");
 var fractionPlayed = fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
 
@@ -19,7 +20,7 @@ inputURL.addEventListener('keypress', function(e){
                 if(response == ""){
                     // alert("Error in URL");
                 } else {
-                    
+
                 }
             });
         }
@@ -56,10 +57,11 @@ function progressBarLoop(){
     // });
     setInterval(function(){
             fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
+            progressPlayed.style.width = ((fractionPlayed*100).toString() + "%");
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
 
     }, 100);
 }
 
-var embededPlayer = document.querySelector('iframe');
-var widget = SC.Widget(embededPlayer);
+// var embededPlayer = document.querySelector('iframe');
+// var widget = SC.Widget(embededPlayer);
