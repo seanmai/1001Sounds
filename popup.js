@@ -12,11 +12,13 @@ var inputURL = document.querySelector('#URL');
 inputURL.addEventListener('keypress', function(e){
     var key = e.which || e.keyCode;
     if (key === 13) { // 13 is enter
-        let message = inputURL.value;
-        inputURL.value = "";
-        chrome.runtime.sendMessage(message, function(response){
-            console.log(response);
-        });
+        if(inputURL.value.length > 0){
+            let message = inputURL.value;
+            inputURL.value = "";
+            chrome.runtime.sendMessage(message, function(response){
+                console.log(response);
+            });
+        }
     }
 });
 

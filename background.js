@@ -31,24 +31,14 @@ var isPlaying = false;
 var currentTime = 0;
 var totalDuration = 0;
 var interval = 0;
-
-// SC.initialize({
-//     client_id: '175c043157ffae2c6d5fed16c3d95a4c'
-// });
-
-// SC.stream('tracks/379392644').then(function(currentTrack){
-// // SC.stream('tracks/553134150').then(function(currentTrack){
-//     SC.currentTrack = currentTrack;
-//     SC.currentTrack.play();
-//     isPlaying = true;
-//     interval = setInterval(updateTime, 100);
-//     //Track needs time to load before can getDuration
-//     setTimeout(function(){
-//         totalDuration = SC.currentTrack.getDuration();
-//         console.log(totalDuration);
-//     }, 750);
-// });
-
+var track = {
+    id: 0,
+    title: "",
+    artwork: "",
+    trackurl: "",
+    username: "",
+    userurl: ""
+};
 
 chrome.runtime.onMessage.addListener(receiver);
 
@@ -73,13 +63,17 @@ function receiver(request, sender, sendResponse){
             url: URL,
             type: "GET",
             success: function(result){
-                // console.log(result);
-
+                console.log(result);
                 SC.initialize({
                     client_id: '175c043157ffae2c6d5fed16c3d95a4c'
                 });
-                var trackID = result.id;
-                SC.stream('tracks/' + trackID).then(function(currentTrack){
+                track.id = result.id;
+                track.title = result.title;
+                track.artwork = result.artwork_url;
+                track.trackurl = result.permalink_url;
+                track.username = result.user.username;
+                track.userurl = result.user.permalink_url;
+                SC.stream('tracks/' + track.id).then(function(currentTrack){
                     SC.currentTrack = currentTrack;
                     SC.currentTrack.play();
                     isPlaying = true;
@@ -104,5 +98,4 @@ function updateTime(){
     if(SC.currentTrack){
         currentTime = SC.currentTrack.currentTime();
     }
-    // console.log(currentTime);
 }
