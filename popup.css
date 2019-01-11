@@ -20,16 +20,16 @@
     border-style: solid;
     top: 50%;
     position: relative;
-    border-width: 1px;
+    border-width: 0.5px;
 }
 
 .progressIndicator {
     background: chocolate;
-    height: 15px;
-    width: 15px;
+    height: 8px;
+    width: 8px;
     position: relative;
     border: 2px solid chocolate;
     border-radius: 25px;
-    top: 8.5px;
+    top: 12.5px;
     left: 0%;
 }

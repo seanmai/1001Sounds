@@ -37,7 +37,8 @@ SC.initialize({
     client_id: '175c043157ffae2c6d5fed16c3d95a4c'
 });
 
-SC.stream('tracks/553134150').then(function(currentTrack){
+SC.stream('tracks/379392644').then(function(currentTrack){
+// SC.stream('tracks/553134150').then(function(currentTrack){
     SC.currentTrack = currentTrack;
     SC.currentTrack.play();
     isPlaying = true;

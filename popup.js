@@ -30,7 +30,8 @@ function progressBarLoop(){
     setInterval(function(){
         if(bgPage.isPlaying){
             var fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
-            console.log(fractionPlayed);
+            // console.log(fractionPlayed);
+            progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
         }
     }, 100);
 }
