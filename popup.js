@@ -16,7 +16,11 @@ inputURL.addEventListener('keypress', function(e){
             let message = inputURL.value;
             inputURL.value = "";
             chrome.runtime.sendMessage(message, function(response){
-                console.log(response);
+                if(response == ""){
+                    // alert("Error in URL");
+                } else {
+                    
+                }
             });
         }
     }

@@ -69,6 +69,7 @@ function receiver(request, sender, sendResponse){
                 });
                 track.id = result.id;
                 track.title = result.title;
+                console.log(track.title);
                 track.artwork = result.artwork_url;
                 track.trackurl = result.permalink_url;
                 track.username = result.user.username;
@@ -89,7 +90,7 @@ function receiver(request, sender, sendResponse){
                 console.log('Error ${error}')
             }
         })
-        sendResponse();
+        sendResponse(track.title + "is playing");
     }
 }
 
