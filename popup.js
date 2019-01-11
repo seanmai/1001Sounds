@@ -5,6 +5,7 @@ var bgPage = chrome.extension.getBackgroundPage();
 var playButton = document.querySelector(".pause-play button span");
 var progressBar = document.querySelector(".progressBar");
 var progressIndicator = document.querySelector(".progressIndicator");
+var fractionPlayed = fractionPlayed = bgPage.currentTime / bgPage.totalDuration;;
 
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#play').addEventListener("click", play);
@@ -28,11 +29,11 @@ function progressBarLoop(){
     //     console.log(divOffset);
     // });
     setInterval(function(){
-        if(bgPage.isPlaying){
-            var fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
+
+            fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
             // console.log(fractionPlayed);
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
-        }
+
     }, 100);
 }
 
