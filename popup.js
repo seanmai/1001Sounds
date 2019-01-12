@@ -6,7 +6,7 @@ var playButton = document.querySelector(".track-controls #play span");
 var timeControls = document.querySelector(".time-controls");
 var progressBar = document.querySelector(".progressBar");
 var progressIndicator = document.querySelector(".progressIndicator");
-var fractionPlayed = fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
+var fractionPlayed = fractionPlayed = bgPage.track.currentTime / bgPage.track.totalDuration;
 var trackTitle = document.querySelector(".title a");
 var artist = document.querySelector(".user a");
 var artwork = document.querySelector(".artwork");
@@ -67,10 +67,10 @@ function progressBarLoop(){
     //     console.log(divOffset);
     // });
     setInterval(function(){
-            fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
+            fractionPlayed = bgPage.track.currentTime / bgPage.track.totalDuration;
             progressBar.style.width = ((fractionPlayed*100).toString() + "%");
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
-            currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.currentTime);
+            currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.track.currentTime);
     }, 100);
 }
 
@@ -81,7 +81,7 @@ function setTrackInfo(){
     artist.setAttribute("href", bgPage.track.userurl);
     artwork.style.backgroundImage = "url(" + bgPage.track.artwork + ")";
     document.querySelector(".artwork-url").setAttribute("href", bgPage.track.trackurl);
-    totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.totalDuration);
+    totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.track.totalDuration);
 }
 
 function millisToHoursAndMinutesAndSeconds(millis) {

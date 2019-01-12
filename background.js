@@ -27,9 +27,6 @@ e.body){var r=e.body.getReader(),n=function(){return r.read().then(function(e){v
 //# sourceMappingURL=sdk-3.3.1.js.map
 
 
-var isPlaying = false;
-var currentTime = 0;
-var totalDuration = 0;
 var interval = 0;
 var track = {
     id: 0,
@@ -37,7 +34,10 @@ var track = {
     artwork: "",
     trackurl: "",
     username: "",
-    userurl: ""
+    userurl: "",
+    isPlaying: false,
+    currentTime: 0,
+    totalDuration: 0
 };
 
 chrome.runtime.onMessage.addListener(receiver);
@@ -45,15 +45,15 @@ chrome.runtime.onMessage.addListener(receiver);
 //Receiver function to handle caught messages
 function receiver(request, sender, sendResponse){
     if(request == "play"){
-        if(isPlaying){
+        if(track.isPlaying){
             SC.currentTrack.pause();
-            isPlaying = false;
+            track.isPlaying = false;
             clearInterval(interval);
             interval = 0;
             sendResponse();
         } else{
             SC.currentTrack.play();
-            isPlaying = true;
+            track.isPlaying = true;
             interval = setInterval(updateTime, 100);
             //sendResponse to sender
             sendResponse();
@@ -74,11 +74,11 @@ function receiver(request, sender, sendResponse){
                 track.trackurl = result.permalink_url;
                 track.username = result.user.username;
                 track.userurl = result.user.permalink_url;
-                totalDuration = result.duration;
+                track.totalDuration = result.duration;
                 SC.stream('tracks/' + track.id).then(function(currentTrack){ // Stream track and set variables
                     SC.currentTrack = currentTrack;
                     SC.currentTrack.play();
-                    isPlaying = true;
+                    track.isPlaying = true;
                     interval = setInterval(updateTime, 100);
                 });
             },
@@ -93,6 +93,6 @@ function receiver(request, sender, sendResponse){
 
 function updateTime(){
     if(SC.currentTrack){
-        currentTime = SC.currentTrack.currentTime();
+        track.currentTime = SC.currentTrack.currentTime();
     }
 }
