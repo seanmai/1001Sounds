@@ -74,8 +74,11 @@ function progressBarLoop(){
 
 function setTrackInfo(){
     trackTitle.innerHTML = bgPage.track.title;
+    trackTitle.setAttribute("href", bgPage.track.trackurl);
     artist.innerHTML = bgPage.track.username;
+    artist.setAttribute("href", bgPage.track.userurl);
     artwork.style.backgroundImage = "url(" + bgPage.track.artwork + ")";
+    document.querySelector(".artwork-url").setAttribute("href", bgPage.track.trackurl);
 }
 
 // var embededPlayer = document.querySelector('iframe');
