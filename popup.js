@@ -3,8 +3,8 @@ var SC=SC||{};SC.Widget=function(n){function t(r){if(e[r])return e[r].exports;va
 
 var bgPage = chrome.extension.getBackgroundPage();
 var playButton = document.querySelector(".track-controls #play span");
+var timeControls = document.querySelector(".time-controls");
 var progressBar = document.querySelector(".progressBar");
-var progressPlayed = document.querySelector(".current-time");
 var progressIndicator = document.querySelector(".progressIndicator");
 var fractionPlayed = fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
 var trackTitle = document.querySelector(".title a");
@@ -66,7 +66,7 @@ function progressBarLoop(){
     // });
     setInterval(function(){
             fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
-            progressPlayed.style.width = ((fractionPlayed*100).toString() + "%");
+            progressBar.style.width = ((fractionPlayed*100).toString() + "%");
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
 
     }, 100);
@@ -79,6 +79,12 @@ function setTrackInfo(){
     artist.setAttribute("href", bgPage.track.userurl);
     artwork.style.backgroundImage = "url(" + bgPage.track.artwork + ")";
     document.querySelector(".artwork-url").setAttribute("href", bgPage.track.trackurl);
+}
+
+function millisToMinutesAndSeconds(millis) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
 // var embededPlayer = document.querySelector('iframe');

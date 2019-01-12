@@ -24,7 +24,7 @@ a {
     height: 100%;
     width: 50px;
     border: 0.5px solid #eee;
-    background-image: url('https://i1.sndcdn.com/artworks-000280968311-7yfvpj-large.jpg');
+    background-image: url('');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -74,35 +74,38 @@ a {
     height: 100%;
 }
 
-.progressBar {
+.time-controls {
     height: 100%;
     width: 430px;
     float: left;
     background: white;
+    font-size: 11px;
 }
-.progressBar:hover .progressIndicator{
+.time-controls:hover .progressIndicator{
     opacity: 1;
 }
-.progressBar:hover{
+.time-controls:hover{
     cursor: pointer;
 }
 
 .timeline {
     border-style: solid;
     top: 50%;
-    width: 438px;
-    color: #ccc;
+    width: 72%;
+    color: #ddd;
     position: relative;
     border-width: 0.5px;
+    display: flex;
 }
 
-.current-time {
+.progressBar {
     border-style: solid;
     top: 48%;
     width: 0;
     color: chocolate;
     position: relative;
     border-width: 0.5px;
+    display: flex;
 }
 
 .progressIndicator {
@@ -116,4 +119,30 @@ a {
     border-radius: 25px;
     top: 11.5px;
     left: 0%;
+    display: flex;
+
+}
+
+.current-time {
+    float: left;
+    display: flex;
+    width: 14%;
+    height: 100%;
+    color: chocolate;
+}
+.total-time {
+    float: right;
+    display: inline-block;
+    position: relative;
+    width: 14%;
+    height: 100%;
+    color: #777;
+}
+.time-controls p{
+    width:100%;
+    height: 50%;
+    text-align:center;
+    position: relative;
+    top: 25%;
+    margin: 0;
 }
