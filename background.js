@@ -42,6 +42,7 @@ var track = {
 
 chrome.runtime.onMessage.addListener(receiver);
 
+//Receiver function to handle caught messages
 function receiver(request, sender, sendResponse){
     if(request == "play"){
         if(isPlaying){
@@ -57,14 +58,14 @@ function receiver(request, sender, sendResponse){
             //sendResponse to sender
             sendResponse();
         }
-    } else if(request.includes("http")){
+    } else if(request.includes("http")){    //If message is a http, send GET request to pull track data
         const URL = "https://api.soundcloud.com/resolve.json?url=" + request + "&client_id=175c043157ffae2c6d5fed16c3d95a4c";
         $.ajax({
             url: URL,
             type: "GET",
             success: function(result){
                 // console.log(result);
-                SC.initialize({
+                SC.initialize({ // Initialize stream
                     client_id: '175c043157ffae2c6d5fed16c3d95a4c'
                 });
                 track.id = result.id;
@@ -73,7 +74,7 @@ function receiver(request, sender, sendResponse){
                 track.trackurl = result.permalink_url;
                 track.username = result.user.username;
                 track.userurl = result.user.permalink_url;
-                SC.stream('tracks/' + track.id).then(function(currentTrack){
+                SC.stream('tracks/' + track.id).then(function(currentTrack){ // Stream track and set variables
                     SC.currentTrack = currentTrack;
                     SC.currentTrack.play();
                     isPlaying = true;
@@ -81,7 +82,6 @@ function receiver(request, sender, sendResponse){
                     //Track needs time to load before can getDuration
                     setTimeout(function(){
                         totalDuration = SC.currentTrack.getDuration();
-                        console.log(totalDuration);
                     }, 750);
                 });
             },

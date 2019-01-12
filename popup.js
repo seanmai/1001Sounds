@@ -7,6 +7,12 @@ var progressBar = document.querySelector(".progressBar");
 var progressPlayed = document.querySelector(".current-time");
 var progressIndicator = document.querySelector(".progressIndicator");
 var fractionPlayed = fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
+var trackTitle = document.querySelector(".title a");
+var artist = document.querySelector(".user a");
+var artwork = document.querySelector(".artwork");
+
+progressBarLoop();
+setTrackInfo();
 
 // Parses URL and sends to background for GET request handling
 var inputURL = document.querySelector('#URL');
@@ -23,17 +29,8 @@ inputURL.addEventListener('keypress', function(e){
                 } else {
                     // Background script needs time to change variables
                     setTimeout(function(){
-                        var trackTitle = document.querySelector(".title");
-                        console.log(bgPage.track.title);
-                        trackTitle.innerHTML = bgPage.track.title;
-                        var artist = document.querySelector(".user");
-                        artist.innerHTML = bgPage.track.username;
-                        console.log(bgPage.track.username);
-                        var artwork = document.querySelector(".artwork");
-                        artwork.style.backgroundImage = "url(" + bgPage.track.artwork + ")";
-                        console.log(bgPage.track.artwork);
+                        setTrackInfo();
                     }, 750);
-
                 }
             });
         }
@@ -54,7 +51,6 @@ function play(){
 
 //Controller set scrubber and button status
 //Kind of janky if statements --some repetition to clean up
-progressBarLoop();
 setInterval(function(){
     if((playButton.className == ("glyphicon glyphicon-play")) && (bgPage.isPlaying == true)){
         playButton.className = "glyphicon glyphicon-pause";
@@ -74,6 +70,12 @@ function progressBarLoop(){
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
 
     }, 100);
+}
+
+function setTrackInfo(){
+    trackTitle.innerHTML = bgPage.track.title;
+    artist.innerHTML = bgPage.track.username;
+    artwork.style.backgroundImage = "url(" + bgPage.track.artwork + ")";
 }
 
 // var embededPlayer = document.querySelector('iframe');
