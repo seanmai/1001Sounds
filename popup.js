@@ -82,6 +82,7 @@ function setTrackInfo(){
     artwork.style.backgroundImage = "url(" + bgPage.track.artwork + ")";
     document.querySelector(".artwork-url").setAttribute("href", bgPage.track.trackurl);
     totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.track.totalDuration);
+    currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.track.currentTime);
 }
 
 function millisToHoursAndMinutesAndSeconds(millis) {
