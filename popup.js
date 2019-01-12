@@ -10,6 +10,8 @@ var fractionPlayed = fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
 var trackTitle = document.querySelector(".title a");
 var artist = document.querySelector(".user a");
 var artwork = document.querySelector(".artwork");
+var currentTime = document.querySelector(".current-time p");
+var totalTime = document.querySelector(".total-time p");
 
 progressBarLoop();
 setTrackInfo();
@@ -68,7 +70,7 @@ function progressBarLoop(){
             fractionPlayed = bgPage.currentTime / bgPage.totalDuration;
             progressBar.style.width = ((fractionPlayed*100).toString() + "%");
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
-
+            currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.currentTime);
     }, 100);
 }
 
@@ -79,12 +81,14 @@ function setTrackInfo(){
     artist.setAttribute("href", bgPage.track.userurl);
     artwork.style.backgroundImage = "url(" + bgPage.track.artwork + ")";
     document.querySelector(".artwork-url").setAttribute("href", bgPage.track.trackurl);
+    totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.totalDuration);
 }
 
-function millisToMinutesAndSeconds(millis) {
-    var minutes = Math.floor(millis / 60000);
+function millisToHoursAndMinutesAndSeconds(millis) {
+    var hours = Math.floor(millis/ 3600000);
+    var minutes = Math.floor((millis  % 60000) / 60000).toFixed(0);
     var seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    return (hours > 0 ? (hours + ":") : '') + (minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
 // var embededPlayer = document.querySelector('iframe');

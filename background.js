@@ -74,15 +74,12 @@ function receiver(request, sender, sendResponse){
                 track.trackurl = result.permalink_url;
                 track.username = result.user.username;
                 track.userurl = result.user.permalink_url;
+                totalDuration = result.duration;
                 SC.stream('tracks/' + track.id).then(function(currentTrack){ // Stream track and set variables
                     SC.currentTrack = currentTrack;
                     SC.currentTrack.play();
                     isPlaying = true;
                     interval = setInterval(updateTime, 100);
-                    //Track needs time to load before can getDuration
-                    setTimeout(function(){
-                        totalDuration = SC.currentTrack.getDuration();
-                    }, 750);
                 });
             },
             error: function(error){
