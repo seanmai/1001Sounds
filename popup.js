@@ -54,9 +54,9 @@ function play(){
 //Controller set scrubber and button status
 //Kind of janky if statements --some repetition to clean up
 setInterval(function(){
-    if((playButton.className == ("glyphicon glyphicon-play")) && (bgPage.isPlaying == true)){
+    if((playButton.className == ("glyphicon glyphicon-play")) && (bgPage.track.isPlaying == true)){
         playButton.className = "glyphicon glyphicon-pause";
-    } else if((playButton.className == ("glyphicon glyphicon-pause")) && (bgPage.isPlaying == false)){
+    } else if((playButton.className == ("glyphicon glyphicon-pause")) && (bgPage.track.isPlaying == false)){
         playButton.className = "glyphicon glyphicon-play";
     }
 }, 100);
