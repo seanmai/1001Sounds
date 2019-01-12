@@ -63,13 +63,12 @@ function receiver(request, sender, sendResponse){
             url: URL,
             type: "GET",
             success: function(result){
-                console.log(result);
+                // console.log(result);
                 SC.initialize({
                     client_id: '175c043157ffae2c6d5fed16c3d95a4c'
                 });
                 track.id = result.id;
                 track.title = result.title;
-                console.log(track.title);
                 track.artwork = result.artwork_url;
                 track.trackurl = result.permalink_url;
                 track.username = result.user.username;

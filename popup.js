@@ -19,7 +19,20 @@ inputURL.addEventListener('keypress', function(e){
             chrome.runtime.sendMessage(message, function(response){
                 if(response == ""){
                     // alert("Error in URL");
+                    // return;
                 } else {
+                    // Background script needs time to change variables
+                    setTimeout(function(){
+                        var trackTitle = document.querySelector(".title");
+                        console.log(bgPage.track.title);
+                        trackTitle.innerHTML = bgPage.track.title;
+                        var artist = document.querySelector(".user");
+                        artist.innerHTML = bgPage.track.username;
+                        console.log(bgPage.track.username);
+                        var artwork = document.querySelector(".artwork");
+                        artwork.style.backgroundImage = "url(" + bgPage.track.artwork + ")";
+                        console.log(bgPage.track.artwork);
+                    }, 750);
 
                 }
             });
