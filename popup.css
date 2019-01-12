@@ -2,9 +2,10 @@ a {
     color: inherit;
     text-decoration: none;
 }
-a:hover{
+.track-info a:hover{
     text-decoration: none;
     cursor: pointer;
+    color: #222;
 }
 
 .extension-container{
@@ -15,7 +16,6 @@ a:hover{
     width: 100%;
     height: 50px;
     margin: 5px;
-    color: #777;
 }
 
 .artwork {
@@ -38,6 +38,7 @@ a:hover{
     width: 405px;
     margin: 0 10px;
     font-size: 10px;
+    color: #aaa;
 }
 
 .title {
@@ -47,6 +48,7 @@ a:hover{
     width: 405px;
     margin: 0 10px;
     font-size: 13.5px;
+    color: #777;
 }
 
 .controller {
@@ -80,6 +82,9 @@ a:hover{
 }
 .progressBar:hover .progressIndicator{
     opacity: 1;
+}
+.progressBar:hover{
+    cursor: pointer;
 }
 
 .timeline {
