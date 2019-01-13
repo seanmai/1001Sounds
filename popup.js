@@ -107,7 +107,6 @@ function seekTimestamp(){
 function seekProgressBar(e){
     var offset = getOffset(e);
     var xOffsetFrac = (offset.x / offset.width);
-    console.log(bgPage.track.totalDuration * xOffsetFrac)
     bgPage.SC.currentTrack.seek(bgPage.track.totalDuration * xOffsetFrac);
 }
 
