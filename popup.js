@@ -86,10 +86,10 @@ function setTrackInfo(){
 }
 
 function millisToHoursAndMinutesAndSeconds(millis) {
-    var hours = Math.floor(millis/ 3600000);
-    var minutes = Math.floor((millis  % 60000) / 60000).toFixed(0);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
-    return (hours > 0 ? (hours + ":") : '') + (minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    var hours = Math.floor(millis / (1000 * 60 * 60)).toFixed(0);
+    var minutes = Math.floor((millis / (1000 * 60)) % 60).toFixed(0);
+    var seconds = ((millis / 1000) % 60).toFixed(0);
+    return ((hours > 0 ? (hours + ":") : '') + ((minutes < 10 && hours > 0) ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds);
 }
 
 // var embededPlayer = document.querySelector('iframe');
