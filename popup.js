@@ -5,6 +5,7 @@ var bgPage = chrome.extension.getBackgroundPage();
 var playButton = document.querySelector(".track-controls #play span");
 var timeControls = document.querySelector(".time-controls");
 var progressBar = document.querySelector(".progressBar");
+var progressWrapper = document.querySelector(".progressWrapper");
 var progressIndicator = document.querySelector(".progressIndicator");
 var fractionPlayed = fractionPlayed = bgPage.track.currentTime / bgPage.track.totalDuration;
 var trackTitle = document.querySelector(".title a");
@@ -32,7 +33,7 @@ inputURL.addEventListener('keypress', function(e){
                     // Background script needs time to change variables
                     setTimeout(function(){
                         setTrackInfo();
-                    }, 750);
+                    }, 800);
                 }
             });
         }
@@ -67,7 +68,11 @@ setInterval(function(){
 }, 100);
 
 function progressBarLoop(){
-    // progressBar.click(function(event){
+    progressWrapper.addEventListener("click", function(){
+        var offset = getElementOffset(this);
+        console.log(offset);
+    })
+    // progressWrapper.click(function(event){
     //     var difOffset = $(this).offset();
     //     console.log(divOffset);
     // });
@@ -107,6 +112,14 @@ function millisToHoursAndMinutesAndSeconds(millis) {
     var minutes = Math.floor((millis / (1000 * 60)) % 60).toFixed(0);
     var seconds = ((millis / 1000) % 60).toFixed(0);
     return ((hours > 0 ? (hours + ":") : '') + ((minutes < 10 && hours > 0) ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds);
+}
+
+function getElementOffset(element){
+    var de = document.documentElement;
+    var box = element.getBoundingClientRect();
+    var top = box.top + window.pageYOffset - de.clientTop;
+    var left = box.left + window.pageXOffset - de.clientLeft;
+    return { top: top, left: left };
 }
 
 // var embededPlayer = document.querySelector('iframe');

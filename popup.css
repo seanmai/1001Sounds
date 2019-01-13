@@ -88,24 +88,30 @@ a {
     cursor: pointer;
 }
 
+.progressWrapper {
+    height: 100%;
+    width: 72%;
+    float: left;
+}
+
 .timeline {
     border-style: solid;
     top: 50%;
-    width: 72%;
+    height: 1px;
+    width: 100%;
     color: #ddd;
     position: relative;
     border-width: 0.5px;
-    display: flex;
 }
 
 .progressBar {
     border-style: solid;
     top: 48%;
+    height: 1px;
     width: 0;
     color: #f50;
     position: relative;
     border-width: 0.5px;
-    display: flex;
 }
 
 .progressIndicator {
