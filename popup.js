@@ -68,19 +68,16 @@ setInterval(function(){
 }, 100);
 
 function progressBarLoop(){
-    progressWrapper.addEventListener("click", function(){
-        var offset = getElementOffset(this);
-        console.log(offset);
-    })
+    progressWrapper.addEventListener("click", seekProgressBar);
+    //Shit does not work without jQuery --FIX LATER
     // progressWrapper.click(function(event){
     //     var difOffset = $(this).offset();
     //     console.log(divOffset);
     // });
     setInterval(function(){
             fractionPlayed = bgPage.track.currentTime / bgPage.track.totalDuration;
-            // 72 because 72% is the width of the timeline in css
-            progressBar.style.width = ((fractionPlayed*72).toString() + "%");
-            progressIndicator.style.left = ((fractionPlayed*72).toString() + "%");
+            progressBar.style.width = ((fractionPlayed*100).toString() + "%");
+            progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
             currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.track.currentTime);
     }, 100);
 }
@@ -107,6 +104,13 @@ function seekTimestamp(){
     bgPage.SC.currentTrack.seek(timeMilli);
 }
 
+function seekProgressBar(e){
+    var offset = getOffset(e);
+    var xOffsetFrac = (offset.x / offset.width);
+    console.log(bgPage.track.totalDuration * xOffsetFrac)
+    bgPage.SC.currentTrack.seek(bgPage.track.totalDuration * xOffsetFrac);
+}
+
 function millisToHoursAndMinutesAndSeconds(millis) {
     var hours = Math.floor(millis / (1000 * 60 * 60)).toFixed(0);
     var minutes = Math.floor((millis / (1000 * 60)) % 60).toFixed(0);
@@ -114,12 +118,16 @@ function millisToHoursAndMinutesAndSeconds(millis) {
     return ((hours > 0 ? (hours + ":") : '') + ((minutes < 10 && hours > 0) ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds);
 }
 
-function getElementOffset(element){
-    var de = document.documentElement;
-    var box = element.getBoundingClientRect();
-    var top = box.top + window.pageYOffset - de.clientTop;
-    var left = box.left + window.pageXOffset - de.clientLeft;
-    return { top: top, left: left };
+function getOffset(e) {
+  var rect = e.target.getBoundingClientRect();
+  var width = rect.width;
+  var x = e.clientX - rect.left;
+  var y = e.clientY - rect.top;
+  return {
+    x,
+    y,
+    width
+  }
 }
 
 // var embededPlayer = document.querySelector('iframe');
