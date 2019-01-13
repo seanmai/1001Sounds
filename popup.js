@@ -14,6 +14,8 @@ var artwork = document.querySelector(".artwork");
 var currentTime = document.querySelector(".current-time p");
 var totalTime = document.querySelector(".total-time p");
 
+
+
 progressBarLoop();
 setTrackInfo();
 
@@ -69,11 +71,6 @@ setInterval(function(){
 
 function progressBarLoop(){
     progressWrapper.addEventListener("click", seekProgressBar);
-    //Shit does not work without jQuery --FIX LATER
-    // progressWrapper.click(function(event){
-    //     var difOffset = $(this).offset();
-    //     console.log(divOffset);
-    // });
     setInterval(function(){
             fractionPlayed = bgPage.track.currentTime / bgPage.track.totalDuration;
             progressBar.style.width = ((fractionPlayed*100).toString() + "%");
@@ -106,6 +103,7 @@ function seekTimestamp(){
 
 function seekProgressBar(e){
     var offset = getOffset(e);
+    console.log(offset);
     var xOffsetFrac = (offset.x / offset.width);
     bgPage.SC.currentTrack.seek(bgPage.track.totalDuration * xOffsetFrac);
 }
@@ -118,7 +116,7 @@ function millisToHoursAndMinutesAndSeconds(millis) {
 }
 
 function getOffset(e) {
-  var rect = e.target.getBoundingClientRect();
+  var rect = progressWrapper.getBoundingClientRect();
   var width = rect.width;
   var x = e.clientX - rect.left;
   var y = e.clientY - rect.top;
