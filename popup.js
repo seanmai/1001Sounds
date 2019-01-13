@@ -68,8 +68,9 @@ function progressBarLoop(){
     // });
     setInterval(function(){
             fractionPlayed = bgPage.track.currentTime / bgPage.track.totalDuration;
-            progressBar.style.width = ((fractionPlayed*100).toString() + "%");
-            progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
+            // 72 because 72% is the width of the timeline in css
+            progressBar.style.width = ((fractionPlayed*72).toString() + "%");
+            progressIndicator.style.left = ((fractionPlayed*72).toString() + "%");
             currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.track.currentTime);
     }, 100);
 }
