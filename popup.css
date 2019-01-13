@@ -102,7 +102,7 @@ a {
     border-style: solid;
     top: 48%;
     width: 0;
-    color: chocolate;
+    color: #f50;
     position: relative;
     border-width: 0.5px;
     display: flex;
@@ -111,11 +111,11 @@ a {
 .progressIndicator {
     opacity: 0;
     transition: 0.15s;
-    background: chocolate;
+    background: #f50;
     height: 8px;
     width: 8px;
     position: relative;
-    border: 2px solid chocolate;
+    border: 2px solid #f50;
     border-radius: 25px;
     top: 11.5px;
     left: 0%;
@@ -128,7 +128,7 @@ a {
     display: flex;
     width: 14%;
     height: 100%;
-    color: chocolate;
+    color: #f50;
 }
 .total-time {
     float: right;

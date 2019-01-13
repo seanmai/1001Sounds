@@ -45,6 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#play').addEventListener("click", play);
 });
 
+// Handles timestamp click
+document.querySelectorAll(".timestamp").forEach(function(ts) {
+    ts.addEventListener("click", seekTimestamp);
+});
+
 function play(){
     let message = "play"
     chrome.runtime.sendMessage(message, function(response){
@@ -84,6 +89,17 @@ function setTrackInfo(){
     document.querySelector(".artwork-url").setAttribute("href", bgPage.track.trackurl);
     totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.track.totalDuration);
     currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.track.currentTime);
+}
+
+function seekTimestamp(){
+    var timeMinSec = this.innerHTML.split(":");
+    var timeMilli = 0;
+    var toMilliSec = 1000
+    for(var i = timeMinSec.length - 1; i >= 0; i--){
+        timeMilli += parseInt(timeMinSec[i])*toMilliSec;
+        toMilliSec *= 60;
+    }
+    bgPage.SC.currentTrack.seek(timeMilli);
 }
 
 function millisToHoursAndMinutesAndSeconds(millis) {
