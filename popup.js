@@ -5,10 +5,12 @@ var bgPage = chrome.extension.getBackgroundPage();
 // var playButton = document.querySelector(".track-controls #play span");
 var playButton = document.querySelector(".track-controls #play");
 var timeControls = document.querySelector(".time-controls");
-var progressBar = document.querySelector(".progressBar");
 var progressWrapper = document.querySelector(".progressWrapper");
-var volumeWrapper = document.querySelector(".volumeWrapper");
+var progressBar = document.querySelector(".progressBar");
 var progressIndicator = document.querySelector(".progressIndicator");
+var volumeWrapper = document.querySelector(".volumeWrapper");
+var volumeBar = document.querySelector(".volumeBar");
+var volumeIndicator = document.querySelector(".volumeIndicator");
 var fractionPlayed = fractionPlayed = bgPage.track.currentTime / bgPage.track.totalDuration;
 var trackTitle = document.querySelector(".title a");
 var artist = document.querySelector(".user a");
@@ -20,6 +22,7 @@ var totalTime = document.querySelector(".total-time p");
 
 progressBarLoop();
 setTrackInfo();
+setVolumeBar();
 
 // Parses URL and sends to background for GET request handling
 var inputURL = document.querySelector('#URL');
@@ -57,10 +60,12 @@ document.addEventListener('DOMContentLoaded', function() {
             bgPage.SC.currentTrack.seek(bgPage.track.currentTime - (5 * 1000));
         } else if (key === 39){    // right arrow
             bgPage.SC.currentTrack.seek(bgPage.track.currentTime + (5 * 1000));
-        } else if (key == 38){      // up arrow
-            bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() + 0.05);
+        } else if (key == 38 && (bgPage.SC.currentTrack.getVolume() < 1)){      // up arrow
+            (bgPage.SC.currentTrack.getVolume() <= 0.95) ? (bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() + 0.05)) : bgPage.SC.currentTrack.setVolume(1);
+            setVolumeBar();
         } else if (key === 40){     // down arrow
-            bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() - 0.05);
+            (bgPage.SC.currentTrack.getVolume() >= 0.05) ? (bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() - 0.05)) : bgPage.SC.currentTrack.setVolume(0);
+            setVolumeBar();
         }
     })
 
@@ -89,13 +94,22 @@ setInterval(function(){
 
 function progressBarLoop(){
     progressWrapper.addEventListener("click", seekProgressBar);
-    // volumeWrapper.addEventListener("click", seekVolumeBar);
     setInterval(function(){
             fractionPlayed = bgPage.track.currentTime / bgPage.track.totalDuration;
             progressBar.style.width = ((fractionPlayed*100).toString() + "%");
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
             currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.track.currentTime);
     }, 100);
+}
+
+function setVolumeBar(){
+    // volumeWrapper.addEventListener("click", seekVolumeBar);
+    if(bgPage.SC.currentTrack){
+
+        volumeBar.style.height = (((bgPage.SC.currentTrack.getVolume()*100) * 0.8).toString() + "%");
+    }
+
+
 }
 
 function setTrackInfo(){
