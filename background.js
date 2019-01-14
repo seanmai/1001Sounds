@@ -50,8 +50,10 @@ function receiver(request, sender, sendResponse){
             interval = 0;
             sendResponse();
         } else{
-            SC.currentTrack.play();
-            track.isPlaying = true;
+            if(SC.currentTrack){
+                SC.currentTrack.play();
+                track.isPlaying = true;
+            }
             //sendResponse to sender
             sendResponse();
         }

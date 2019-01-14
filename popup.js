@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (key === 40){     // down arrow
             (bgPage.SC.currentTrack.getVolume() >= 0.05) ? (bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() - 0.05)) : bgPage.SC.currentTrack.setVolume(0);
             setVolumeBar();
-        } else if (key === 32){     // space bar
+        } else if (key === 32 || key === 179){     // space bar and media play
             play();
         }
     });
