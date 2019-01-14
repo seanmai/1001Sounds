@@ -2,7 +2,6 @@ var SC=SC||{};SC.Widget=function(n){function t(r){if(e[r])return e[r].exports;va
 
 
 var bgPage = chrome.extension.getBackgroundPage();
-// var playButton = document.querySelector(".track-controls #play span");
 var playButton = document.querySelector(".track-controls #play");
 var timeControls = document.querySelector(".time-controls");
 var progressWrapper = document.querySelector(".progressWrapper");
@@ -41,7 +40,7 @@ inputURL.addEventListener('keypress', function(e){
                     setTimeout(function(){
                         setTrackInfo();
                         progressBarLoop();
-                    }, 800);
+                    }, 850);
                 }
             });
         }
@@ -58,14 +57,14 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener("keydown", function(e){
         var key = e.which || e.keyCode;
         if (key === 37) {          // left arrow
-            bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.currentTime() - (5 * 1000));
+            decrementTime();
         } else if (key === 39){    // right arrow
-            bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.currentTime() + (5 * 1000));
+            incrementTime();
         } else if (key == 38 && (bgPage.SC.currentTrack.getVolume() < 1)){      // up arrow
-            (bgPage.SC.currentTrack.getVolume() <= 0.95) ? (bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() + 0.05)) : bgPage.SC.currentTrack.setVolume(1);
+            incrementVolume();
             setVolumeBar();
         } else if (key === 40){     // down arrow
-            (bgPage.SC.currentTrack.getVolume() >= 0.05) ? (bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() - 0.05)) : bgPage.SC.currentTrack.setVolume(0);
+            decrementVolume();
             setVolumeBar();
         } else if (key === 32 || key === 179){     // space bar and media play
             play();
@@ -108,11 +107,28 @@ function progressBarLoop(){
 }
 
 function setVolumeBar(){
-    // volumeWrapper.addEventListener("click", seekVolumeBar);
+    volumeWrapper.addEventListener("click", seekVolumeBar);
     if(bgPage.SC.currentTrack){
         volumeBar.style.height = (((bgPage.SC.currentTrack.getVolume()*100) * 0.8).toString() + "%");
         volumeIndicator.style.top = ((-75 + bgPage.SC.currentTrack.getVolume()*0.5).toString() + "px");     //This shouldn't work but it does.. should be top height - vol*bottom height
     }
+}
+
+function seekVolumeBar(e){
+    if(bgPage.SC.currentTrack){
+        var offset = getVolumeOffset(e);
+        var yOffsetFrac = (offset.y / offset.height);
+        bgPage.SC.currentTrack.setVolume(yOffsetFrac);
+        setVolumeBar();
+    }
+}
+
+function incrementVolume(){
+    (bgPage.SC.currentTrack.getVolume() <= 0.95) ? (bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() + 0.05)) : bgPage.SC.currentTrack.setVolume(1);
+}
+
+function decrementVolume(){
+    (bgPage.SC.currentTrack.getVolume() >= 0.05) ? (bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() - 0.05)) : bgPage.SC.currentTrack.setVolume(0);
 }
 
 function setTrackInfo(){
@@ -143,10 +159,18 @@ function seekTimestamp(){
 
 function seekProgressBar(e){
     if(bgPage.SC.currentTrack){
-        var offset = getOffset(e);
+        var offset = getTimelineOffset(e);
         var xOffsetFrac = (offset.x / offset.width);
         bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.getDuration() * xOffsetFrac);
     }
+}
+
+function incrementTime(){
+    bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.currentTime() + (5 * 1000));
+}
+
+function decrementTime(){
+    bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.currentTime() - (5 * 1000));
 }
 
 function millisToHoursAndMinutesAndSeconds(millis) {
@@ -156,8 +180,21 @@ function millisToHoursAndMinutesAndSeconds(millis) {
     return ((hours > 0 ? (hours + ":") : '') + ((minutes < 10 && hours > 0) ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds);
 }
 
-function getOffset(e) {
+function getTimelineOffset(e) {
   var rect = progressWrapper.getBoundingClientRect();   //e.target doesn't work -sometimes targetted child div
+  var width = rect.width;
+  var height = rect.height;
+  var x = e.clientX - rect.left;
+  var y = e.clientY - rect.top;
+  return {
+    x,
+    y,
+    width,
+    height
+  }
+}
+function getVolumeOffset(e) {
+  var rect = volumeWrapper.getBoundingClientRect();   //e.target doesn't work -sometimes targetted child div
   var width = rect.width;
   var height = rect.height;
   var x = e.clientX - rect.left;
