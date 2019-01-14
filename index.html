@@ -5,6 +5,7 @@
         <title></title>
         <script src="soundcloud-3.3.1.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link rel="stylesheet" href="popup.css">
     </head>
     <body>
@@ -25,9 +26,12 @@
             </div>
             <div class="controller">
                 <div class="track-controls">
-                    <button type="button" class="btn btn-default controller-btn" id="play">
+                    <i class="fas fa-step-backward"></i>
+                    <i class="fas fa-play" id="play"></i>
+                    <i class="fas fa-step-forward"></i>
+                    <!-- <button type="button" class="btn btn-default controller-btn" id="play">
                         <span class="glyphicon glyphicon-play"></span>
-                    </button>
+                    </button> -->
                 </div>
                 <div class="time-controls">
                     <div class="current-time">
@@ -42,10 +46,20 @@
                         <div class="progressIndicator"></div>
                     </div>
                 </div>
+                <div class="volume-controls">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+            </div>
+            <div class="volumeWrapper">
+                <div class="volumeline"></div>
+                <div class="volumeBar"></div>
+                <div class="volumeIndicator"></div>
             </div>
             <div class="timestamp-container">
                 <p><span class="timestamp">0:37</span></p>
                 <p><span class="timestamp">10:00</span></p>
+                <p><span class="timestamp">1:00:10</span></p>
+                <p><span class="timestamp">1:00:10</span></p>
                 <p><span class="timestamp">1:00:10</span></p>
             </div>
         </div>
@@ -54,3 +68,6 @@
         <script type="text/javascript" src="popup.js"></script>
     </body
 </html>
+
+<!-- ▶ ❚❚ 𝌆  ⏮ ⏭ 🕨 🕩 🕪-->
+<!-- https://fontawesome.com/icons?from=io#video-player -->

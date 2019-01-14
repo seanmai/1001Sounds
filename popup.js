@@ -2,10 +2,12 @@ var SC=SC||{};SC.Widget=function(n){function t(r){if(e[r])return e[r].exports;va
 
 
 var bgPage = chrome.extension.getBackgroundPage();
-var playButton = document.querySelector(".track-controls #play span");
+// var playButton = document.querySelector(".track-controls #play span");
+var playButton = document.querySelector(".track-controls #play");
 var timeControls = document.querySelector(".time-controls");
 var progressBar = document.querySelector(".progressBar");
 var progressWrapper = document.querySelector(".progressWrapper");
+var volumeWrapper = document.querySelector(".volumeWrapper");
 var progressIndicator = document.querySelector(".progressIndicator");
 var fractionPlayed = fractionPlayed = bgPage.track.currentTime / bgPage.track.totalDuration;
 var trackTitle = document.querySelector(".title a");
@@ -43,15 +45,31 @@ inputURL.addEventListener('keypress', function(e){
 });
 
 
-// Handles play button click
 document.addEventListener('DOMContentLoaded', function() {
+    // Handles play button click
     document.querySelector('#play').addEventListener("click", play);
+
+    // Handles left and right arrow keys
+    window.addEventListener("keydown", function(e){
+        var key = e.which || e.keyCode;
+        console.log(key);
+        if (key === 37) {          // left arrow
+            bgPage.SC.currentTrack.seek(bgPage.track.currentTime - (5 * 1000));
+        } else if (key === 39){    // right arrow
+            bgPage.SC.currentTrack.seek(bgPage.track.currentTime + (5 * 1000));
+        } else if (key == 38){      // up arrow
+            bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() + 0.05);
+        } else if (key === 40){     // down arrow
+            bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() - 0.05);
+        }
+    })
+
+    // Handles timestamp click
+    document.querySelectorAll(".timestamp").forEach(function(ts) {
+        ts.addEventListener("click", seekTimestamp);
+    });
 });
 
-// Handles timestamp click
-document.querySelectorAll(".timestamp").forEach(function(ts) {
-    ts.addEventListener("click", seekTimestamp);
-});
 
 function play(){
     let message = "play"
@@ -59,18 +77,19 @@ function play(){
     });
 }
 
-//Controller set scrubber and button status
+//Controller set scrubber and button status -- MOVE INTO: set track info later, dont need the interval func
 //Kind of janky if statements --some repetition to clean up
 setInterval(function(){
-    if((playButton.className == ("glyphicon glyphicon-play")) && (bgPage.track.isPlaying == true)){
-        playButton.className = "glyphicon glyphicon-pause";
-    } else if((playButton.className == ("glyphicon glyphicon-pause")) && (bgPage.track.isPlaying == false)){
-        playButton.className = "glyphicon glyphicon-play";
+    if((playButton.className == ("fas fa-play")) && (bgPage.track.isPlaying)){
+        playButton.className = "fas fa-pause";
+    } else if((playButton.className == ("fas fa-pause")) && (!bgPage.track.isPlaying)){
+        playButton.className = "fas fa-play";
     }
 }, 100);
 
 function progressBarLoop(){
     progressWrapper.addEventListener("click", seekProgressBar);
+    // volumeWrapper.addEventListener("click", seekVolumeBar);
     setInterval(function(){
             fractionPlayed = bgPage.track.currentTime / bgPage.track.totalDuration;
             progressBar.style.width = ((fractionPlayed*100).toString() + "%");
@@ -116,14 +135,16 @@ function millisToHoursAndMinutesAndSeconds(millis) {
 }
 
 function getOffset(e) {
-  var rect = progressWrapper.getBoundingClientRect();
+  var rect = progressWrapper.getBoundingClientRect();   //e.target doesn't work -sometimes targetted child div
   var width = rect.width;
+  var height = rect.height;
   var x = e.clientX - rect.left;
   var y = e.clientY - rect.top;
   return {
     x,
     y,
-    width
+    width,
+    height
   }
 }
 
