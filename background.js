@@ -35,9 +35,7 @@ var track = {
     trackurl: "",
     username: "",
     userurl: "",
-    isPlaying: false,
-    currentTime: 0,
-    totalDuration: 0
+    isPlaying: false
 };
 
 chrome.runtime.onMessage.addListener(receiver);
@@ -54,7 +52,6 @@ function receiver(request, sender, sendResponse){
         } else{
             SC.currentTrack.play();
             track.isPlaying = true;
-            interval = setInterval(updateTime, 100);
             //sendResponse to sender
             sendResponse();
         }
@@ -78,13 +75,11 @@ function receiver(request, sender, sendResponse){
                 track.trackurl = result.permalink_url;
                 track.username = result.user.username;
                 track.userurl = result.user.permalink_url;
-                track.totalDuration = result.duration;
                 SC.stream('tracks/' + track.id).then(function(currentTrack){ // Stream track and set variables
                     SC.currentTrack = currentTrack;
                     SC.currentTrack.play();
                     SC.currentTrack.setVolume(volume);  // Maintains volume of previous track
                     track.isPlaying = true;
-                    interval = setInterval(updateTime, 100);
                 });
             },
             error: function(error){
@@ -92,12 +87,5 @@ function receiver(request, sender, sendResponse){
             }
         })
         sendResponse(track.title + "is playing");
-    }
-}
-
-
-function updateTime(){
-    if(SC.currentTrack){
-        track.currentTime = SC.currentTrack.currentTime();
     }
 }

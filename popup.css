@@ -208,3 +208,12 @@ a {
     left: 10px;
     display: flex;
 }
+
+.timestamp-container {
+    margin: 10px;
+    color: #777;
+}
+
+.timestamp:hover {
+    cursor: pointer
+}
