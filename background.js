@@ -59,6 +59,10 @@ function receiver(request, sender, sendResponse){
             sendResponse();
         }
     } else if(request.includes("http")){    //If message is a http, send GET request to pull track data
+        var volume = 1;
+        if(SC.currentTrack){
+            volume = SC.currentTrack.getVolume();
+        }
         const URL = "https://api.soundcloud.com/resolve.json?url=" + request + "&client_id=175c043157ffae2c6d5fed16c3d95a4c";
         $.ajax({
             url: URL,
@@ -78,6 +82,7 @@ function receiver(request, sender, sendResponse){
                 SC.stream('tracks/' + track.id).then(function(currentTrack){ // Stream track and set variables
                     SC.currentTrack = currentTrack;
                     SC.currentTrack.play();
+                    SC.currentTrack.setVolume(volume);  // Maintains volume of previous track
                     track.isPlaying = true;
                     interval = setInterval(updateTime, 100);
                 });

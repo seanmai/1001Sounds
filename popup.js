@@ -49,6 +49,7 @@ inputURL.addEventListener('keypress', function(e){
 
 
 document.addEventListener('DOMContentLoaded', function() {
+
     // Handles play button click
     document.querySelector('#play').addEventListener("click", play);
 
@@ -66,8 +67,10 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (key === 40){     // down arrow
             (bgPage.SC.currentTrack.getVolume() >= 0.05) ? (bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() - 0.05)) : bgPage.SC.currentTrack.setVolume(0);
             setVolumeBar();
+        } else if (key === 32){     // space bar
+            play();
         }
-    })
+    });
 
     // Handles timestamp click
     document.querySelectorAll(".timestamp").forEach(function(ts) {
@@ -105,11 +108,9 @@ function progressBarLoop(){
 function setVolumeBar(){
     // volumeWrapper.addEventListener("click", seekVolumeBar);
     if(bgPage.SC.currentTrack){
-
         volumeBar.style.height = (((bgPage.SC.currentTrack.getVolume()*100) * 0.8).toString() + "%");
+        volumeIndicator.style.top = ((-75 + bgPage.SC.currentTrack.getVolume()*0.5).toString() + "px");     //This shouldn't work but it does.. should be top height - vol*bottom height
     }
-
-
 }
 
 function setTrackInfo(){
@@ -135,10 +136,12 @@ function seekTimestamp(){
 }
 
 function seekProgressBar(e){
-    var offset = getOffset(e);
-    console.log(offset);
-    var xOffsetFrac = (offset.x / offset.width);
-    bgPage.SC.currentTrack.seek(bgPage.track.totalDuration * xOffsetFrac);
+    if(bgPage.SC.currentTrack){
+        var offset = getOffset(e);
+        console.log(offset);
+        var xOffsetFrac = (offset.x / offset.width);
+        bgPage.SC.currentTrack.seek(bgPage.track.totalDuration * xOffsetFrac);
+    }
 }
 
 function millisToHoursAndMinutesAndSeconds(millis) {
