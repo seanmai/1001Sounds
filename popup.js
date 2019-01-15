@@ -53,6 +53,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handles play button click
     document.querySelector('#play').addEventListener("click", play);
 
+    // Handles login button click --REMOVED for now: needs redirect_uri
+    // document.querySelector("#login").addEventListener("click", sclogin);
+
     // Handles left and right arrow keys
     window.addEventListener("keydown", function(e){
         var key = e.which || e.keyCode;
@@ -80,6 +83,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function play(){
     let message = "play"
+    chrome.runtime.sendMessage(message, function(response){
+    });
+}
+
+function sclogin(){
+    console.log("button clicked");
+    let message = "login"
     chrome.runtime.sendMessage(message, function(response){
     });
 }
@@ -180,6 +190,7 @@ function millisToHoursAndMinutesAndSeconds(millis) {
     return ((hours > 0 ? (hours + ":") : '') + ((minutes < 10 && hours > 0) ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds);
 }
 
+//Change later to pass in rect object as second arg
 function getTimelineOffset(e) {
   var rect = progressWrapper.getBoundingClientRect();   //e.target doesn't work -sometimes targetted child div
   var width = rect.width;

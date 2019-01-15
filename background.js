@@ -89,5 +89,16 @@ function receiver(request, sender, sendResponse){
             }
         })
         sendResponse(track.title + "is playing");
+    } else if(request == "login"){
+        SC.initialize({
+          client_id: '175c043157ffae2c6d5fed16c3d95a4c',
+          redirect_uri: 'http://connect.soundcloud.com/examples/callback.html'
+        });
+
+        SC.connect().then(function() {
+          return SC.get('/me');
+        }).then(function(me) {
+          alert('Hello, ' + me.username);
+        });
     }
 }
