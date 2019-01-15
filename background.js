@@ -91,7 +91,7 @@ function receiver(request, sender, sendResponse){
         sendResponse(track.title + "is playing");
     } else if(request == "login"){
         SC.initialize({
-          client_id: '175c043157ffae2c6d5fed16c3d95a4c',
+          client_id: 'c202b469a633a7a5b15c9e10b5272b78',                    // BORROWED FROM http://connect.soundcloud.com/examples/connecting.html
           redirect_uri: 'http://connect.soundcloud.com/examples/callback.html'
         });
 

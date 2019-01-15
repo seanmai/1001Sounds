@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#play').addEventListener("click", play);
 
     // Handles login button click --REMOVED for now: needs redirect_uri
-    // document.querySelector("#login").addEventListener("click", sclogin);
+    document.querySelector("#login").addEventListener("click", sclogin);
 
     // Handles left and right arrow keys
     window.addEventListener("keydown", function(e){
