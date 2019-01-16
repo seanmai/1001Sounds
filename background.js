@@ -37,6 +37,7 @@ var track = {
     userurl: "",
     isPlaying: false
 };
+var favTracksLL = [];
 
 
 
@@ -104,5 +105,21 @@ function receiver(request, sender, sendResponse){
 
         });
         sendResponse();
+    } else if(request === "favorites"){   // Gets sou
+        // const URL = "http://api.soundcloud.com/users" + me.id + "/favorites?&client_id=175c043157ffae2c6d5fed16c3d95a4c";
+        const URL = "http://api.soundcloud.com/users/205000014/favorites?client_id=175c043157ffae2c6d5fed16c3d95a4c";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            success: function(result){
+                // console.log(result);
+                favTracksLL = result;
+            },
+            error: function(error){
+                console.log('Error ${error}')
+            }
+        })
+        sendResponse(track.title + "is playing");
     }
+
 }
