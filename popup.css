@@ -9,7 +9,7 @@ a {
 }
 
 .extension-container{
-    width: 550px;
+    width: 535px;
 }
 
 .track-info{
@@ -216,4 +216,17 @@ a {
 
 .timestamp:hover {
     cursor: pointer
+}
+
+.hidden {
+    display: hidden;
+}
+
+.tracklist-btn{
+    margin: 5px 15px;
+    float: right;
+    position: relative;
+}
+.tracklist-btn:hover {
+    cursor: pointer;
 }
