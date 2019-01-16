@@ -3,6 +3,7 @@ var SC=SC||{};SC.Widget=function(n){function t(r){if(e[r])return e[r].exports;va
 
 var bgPage = chrome.extension.getBackgroundPage();
 var playButton = document.querySelector(".track-controls #play");
+var tracklistButton = document.querySelector(".tracklist-btn");
 var timeControls = document.querySelector(".time-controls");
 var progressWrapper = document.querySelector(".progressWrapper");
 var progressBar = document.querySelector(".progressBar");
@@ -51,7 +52,9 @@ inputURL.addEventListener('keypress', function(e){
 document.addEventListener('DOMContentLoaded', function() {
 
     // Handles play button click
-    document.querySelector('#play').addEventListener("click", play);
+    playButton.addEventListener("click", play);
+
+    tracklistButton.addEventListener("click", toggleTracklist);
 
     // Handles login button click --REMOVED for now: needs redirect_uri
     // document.querySelector("#login").addEventListener("click", sclogin);
@@ -92,6 +95,10 @@ function sclogin(){
     let message = "login"
     chrome.runtime.sendMessage(message, function(response){
     });
+}
+
+function toggleTracklist(){
+    document.querySelector(".timestamp-container").classList.toggle("hidden");
 }
 
 //Controller set scrubber and button status -- MOVE INTO: set track info later, dont need the interval func
