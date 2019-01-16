@@ -4,6 +4,7 @@ var tracklistButton = document.querySelector(".tracklist-btn");
 var timeControls = document.querySelector(".time-controls");
 var progressWrapper = document.querySelector(".progressWrapper");
 var progressBar = document.querySelector(".progressBar");
+var volumeControls = document.querySelector(".volume-controls");
 var progressIndicator = document.querySelector(".progressIndicator");
 var volumeWrapper = document.querySelector(".volumeWrapper");
 var volumeBar = document.querySelector(".volumeBar");
@@ -53,6 +54,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     tracklistButton.addEventListener("click", toggleTracklist);
 
+    volumeControls.onmouseover = function(){
+        volumeWrapper.style.visibility = ("visible");
+    }
+    volumeControls.onmouseout = function(){
+        volumeWrapper.style.visibility = ("hidden");
+    }
+    volumeWrapper.onmouseover = function(){
+        volumeWrapper.style.visibility = ("visible");
+    }
+    volumeWrapper.onmouseout = function(){
+        volumeWrapper.style.visibility = ("hidden");
+    }
+
     // Handles login button click --REMOVED for now: needs redirect_uri
     // document.querySelector("#login").addEventListener("click", sclogin);
 
@@ -88,7 +102,6 @@ function play(){
 }
 
 function sclogin(){
-    console.log("button clicked");
     let message = "login"
     chrome.runtime.sendMessage(message, function(response){
     });
@@ -137,14 +150,14 @@ function setVolumeBar(){
     volumeWrapper.addEventListener("click", seekVolumeBar);
     if(bgPage.SC.currentTrack){
         volumeBar.style.height = (((bgPage.SC.currentTrack.getVolume()*100) * 0.8).toString() + "%");
-        volumeIndicator.style.top = ((-75 + bgPage.SC.currentTrack.getVolume()*0.5).toString() + "px");     //This shouldn't work but it does.. should be top height - vol*bottom height
+        volumeIndicator.style.bottom = ((-2 + bgPage.SC.currentTrack.getVolume()*70).toString() + "px");     //This shouldn't work but it does.. should be top height - vol*bottom height
     }
 }
 
 function seekVolumeBar(e){
     if(bgPage.SC.currentTrack){
         var offset = getVolumeOffset(e);
-        var yOffsetFrac = (offset.y / offset.height);
+        var yOffsetFrac = ((offset.height-offset.y) / offset.height);
         bgPage.SC.currentTrack.setVolume(yOffsetFrac);
         setVolumeBar();
     }

@@ -39,8 +39,6 @@ var track = {
 };
 var favTracksLL = [];
 
-
-
 chrome.runtime.onMessage.addListener(receiver);
 
 //Receiver function to handle caught messages
@@ -92,34 +90,34 @@ function receiver(request, sender, sendResponse){
             }
         })
         sendResponse(track.title + "is playing");
-    } else if(request == "login"){
-        SC.initialize({
-          client_id: 'c202b469a633a7a5b15c9e10b5272b78',    // BORROWED FROM http://connect.soundcloud.com/examples/connecting.html
-          redirect_uri: 'http://connect.soundcloud.com/examples/callback.html'
-        });
-
-        SC.connect().then(function() {
-          return SC.get('/me');
-        }).then(function(me) {
-            alert('Hello, ' + me.username);
-
-        });
-        sendResponse();
-    } else if(request === "favorites"){   // Gets sou
-        // const URL = "http://api.soundcloud.com/users" + me.id + "/favorites?&client_id=175c043157ffae2c6d5fed16c3d95a4c";
-        const URL = "http://api.soundcloud.com/users/205000014/favorites?client_id=175c043157ffae2c6d5fed16c3d95a4c";
-        $.ajax({
-            url: URL,
-            type: "GET",
-            success: function(result){
-                // console.log(result);
-                favTracksLL = result;
-            },
-            error: function(error){
-                console.log('Error ${error}')
-            }
-        })
-        sendResponse(track.title + "is playing");
+    // } else if(request == "login"){
+    //     SC.initialize({
+    //       client_id: 'c202b469a633a7a5b15c9e10b5272b78',    // BORROWED FROM http://connect.soundcloud.com/examples/connecting.html
+    //       redirect_uri: 'http://connect.soundcloud.com/examples/callback.html'
+    //     });
+    //
+    //     SC.connect().then(function() {
+    //       return SC.get('/me');
+    //     }).then(function(me) {
+    //         alert('Hello, ' + me.username);
+    //
+    //     });
+    //     sendResponse();
+    // } else if(request === "favorites"){   // Gets sou
+    //     // const URL = "http://api.soundcloud.com/users" + me.id + "/favorites?&client_id=175c043157ffae2c6d5fed16c3d95a4c";
+    //     const URL = "http://api.soundcloud.com/users/205000014/favorites?client_id=175c043157ffae2c6d5fed16c3d95a4c";
+    //     $.ajax({
+    //         url: URL,
+    //         type: "GET",
+    //         success: function(result){
+    //             // console.log(result);
+    //             favTracksLL = result;
+    //         },
+    //         error: function(error){
+    //             console.log('Error ${error}')
+    //         }
+    //     })
+    //     sendResponse();
     }
 
 }

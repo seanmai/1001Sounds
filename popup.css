@@ -162,17 +162,22 @@ a {
 }
 
 .volumeWrapper {
-    opacity: 1;
+    visibility: hidden;
     left: 500px;
     width: 30px;
-    height: 100px;
+    height: 95px;
     border: 0.5px solid #ddd;
+    background: white;
+    margin-top: 5px;
     position: fixed;
     z-index: 100;
-    box-shadow: 0 8px 6px -6px #aaa;
+    /* box-shadow: 0 8px 6px -6px #aaa; */
 }
 .volumeWrapper:hover, .volume-controls:hover{
     cursor: pointer;
+}
+.volume-controls:hover .volumeWrapper{
+    visibility: visible;
 }
 
 .volumeline{
@@ -188,12 +193,12 @@ a {
 
 .volumeBar{
     border-style: solid;
-    top: -70px;
+    bottom: 10px;
     left: 50%;
     width: 1px;
     height: 80%;
     color: #f50;
-    position: relative;
+    position: absolute;
     border-width: 0.5px;
 }
 
@@ -204,7 +209,7 @@ a {
     position: relative;
     border: 2px solid #f50;
     border-radius: 25px;
-    top: -75px;
+    bottom: 68px;
     left: 10px;
     display: flex;
 }
@@ -219,7 +224,7 @@ a {
 }
 
 .tracklist-btn{
-    margin: 5px 15px;
+    margin: 5px 13px;
     float: right;
     position: relative;
 }
@@ -229,5 +234,5 @@ a {
 
 .hidden {
     opacity: 0;
-    display: hidden;
+    visibility: hidden;
 }

@@ -9,11 +9,16 @@
         <link rel="stylesheet" href="popup.css">
     </head>
     <body>
-        <div class="header">
-            <input class="form-control" type="text" name="URL" id="URL" placeholder="Insert URL" value="https://soundcloud.com/illeniumbootlegs/illenium-unreleased-2018-edits-full-mix">
-            <!-- <button type="button" name="button" id="login">Login</button> -->
-        </div>
         <div class="extension-container">
+            <div class="volumeWrapper">
+                <div class="volumeline"></div>
+                <div class="volumeBar"></div>
+                <div class="volumeIndicator"></div>
+            </div>
+            <div class="header">
+                <input class="form-control" type="text" name="URL" id="URL" placeholder="Insert URL" value="https://soundcloud.com/illeniumbootlegs/illenium-unreleased-2018-edits-full-mix">
+                <!-- <button type="button" name="button" id="login">Login</button> -->
+            </div>
             <div class="tracklist-btn">
                 <i class="fas fa-list" title="Toggle Tracklist"></i>
             </div>
@@ -50,11 +55,6 @@
                 <div class="volume-controls">
                     <i class="fas fa-volume-up"></i>
                 </div>
-            </div>
-            <div class="volumeWrapper">
-                <div class="volumeline"></div>
-                <div class="volumeBar"></div>
-                <div class="volumeIndicator"></div>
             </div>
             <div class="timestamp-container"> <!-- dummy data until scraping is moved over -->
                 <p><span class="timestamp">0:00 - 2017 Intro</span></p>
