@@ -189,16 +189,16 @@ function setTrackInfo(){
 
 function setTracklist(){
     if(bgPage.tracklist.length > 0){
+        for(var i = 0; i < bgPage.tracklist.length; i++){
+            var p = document.createElement("p");
+            p.classList.add("timestamp");
+            var node = document.createTextNode(bgPage.tracklist[i]);
+            p.appendChild(node);
+            timestampContainer.appendChild(p);
+        }
         if(!bgPage.showTracklist){
             timestampContainer.classList.add("hidden");
         } else {
-            for(var i = 0; i < bgPage.tracklist.length; i++){
-                var p = document.createElement("p");
-                p.classList.add("timestamp");
-                var node = document.createTextNode(bgPage.tracklist[i]);
-                p.appendChild(node);
-                timestampContainer.appendChild(p);
-            }
             // Handles timestamp click
             document.querySelectorAll(".timestamp").forEach(function(ts) {
                 ts.addEventListener("click", seekTimestamp);
