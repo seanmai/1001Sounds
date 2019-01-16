@@ -15,10 +15,12 @@ var artist = document.querySelector(".user a");
 var artwork = document.querySelector(".artwork");
 var currentTime = document.querySelector(".current-time p");
 var totalTime = document.querySelector(".total-time p");
+var timestampContainer = document.querySelector(".timestamp-container");
 
 
 progressBarLoop();
 setTrackInfo();
+setTracklist()
 setVolumeBar();
 autofillSearch();
 
@@ -39,6 +41,7 @@ inputURL.addEventListener('keypress', function(e){
                     // Background script needs time to change variables
                     setTimeout(function(){
                         setTrackInfo();
+                        setTracklist()
                         progressBarLoop();
                     }, 1500);
                 }
@@ -56,15 +59,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     volumeControls.onmouseover = function(){
         volumeWrapper.style.visibility = ("visible");
+        volumeWrapper.style.opacity = ("1");
     }
     volumeControls.onmouseout = function(){
         volumeWrapper.style.visibility = ("hidden");
+        volumeWrapper.style.opacity = ("0");
     }
     volumeWrapper.onmouseover = function(){
         volumeWrapper.style.visibility = ("visible");
+        volumeWrapper.style.opacity = ("1");
     }
     volumeWrapper.onmouseout = function(){
         volumeWrapper.style.visibility = ("hidden");
+        volumeWrapper.style.opacity = ("0");
     }
 
     // Handles login button click --REMOVED for now: needs redirect_uri
@@ -87,11 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
             play();
         }
     });
-
-    // Handles timestamp click
-    document.querySelectorAll(".timestamp").forEach(function(ts) {
-        ts.addEventListener("click", seekTimestamp);
-    });
 });
 
 
@@ -108,7 +110,8 @@ function sclogin(){
 }
 
 function toggleTracklist(){
-    document.querySelector(".timestamp-container").classList.toggle("hidden");
+    timestampContainer.classList.toggle("hidden");
+    bgPage.showTracklist = !(bgPage.showTracklist);
 }
 
 function autofillSearch(){
@@ -181,6 +184,27 @@ function setTrackInfo(){
         document.querySelector(".artwork-url").setAttribute("href", bgPage.track.trackurl);
         totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.getDuration());
         currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.currentTime());
+    }
+}
+
+function setTracklist(){
+    if(bgPage.tracklist.length > 0){
+        if(!bgPage.showTracklist){
+            timestampContainer.classList.add("hidden");
+        } else {
+            for(var i = 0; i < bgPage.tracklist.length; i++){
+                var p = document.createElement("p");
+                p.classList.add("timestamp");
+                var node = document.createTextNode(bgPage.tracklist[i]);
+                p.appendChild(node);
+                timestampContainer.appendChild(p);
+            }
+            // Handles timestamp click
+            document.querySelectorAll(".timestamp").forEach(function(ts) {
+                ts.addEventListener("click", seekTimestamp);
+            });
+            timestampContainer.classList.remove("hidden");
+        }
     }
 }
 

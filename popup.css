@@ -1,3 +1,9 @@
+body {
+    font-family:"Interstate", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Garuda, Verdana, Tahoma, sans-serif;
+    font-weight: 100;
+    line-height: 1.2;
+}
+
 a {
     color: inherit;
     text-decoration: none;
@@ -10,6 +16,11 @@ a {
 
 .extension-container{
     width: 535px;
+}
+
+.header{
+    margin: 5px;
+    height: 25px;
 }
 
 .track-info{
@@ -110,25 +121,25 @@ a {
     width: 100%;
     color: #ddd;
     position: relative;
-    border-width: 0.5px;
+    border-width: 0.2px;
 }
 
 .progressBar {
     border-style: solid;
-    top: 48%;
+    top: 45%;
     height: 1px;
     width: 0;
     color: #f50;
     position: relative;
-    border-width: 0.5px;
+    border-width: 0.2px;
 }
 
 .progressIndicator {
     opacity: 0;
     transition: opacity 0.15s;
     background: #f50;
-    height: 8px;
-    width: 8px;
+    height: 3px;
+    width: 3px;
     position: relative;
     border: 2px solid #f50;
     border-radius: 25px;
@@ -163,21 +174,20 @@ a {
 
 .volumeWrapper {
     visibility: hidden;
-    left: 500px;
+    transition: opacity 0.25s;
+    top: 0;
+    left: 508px;
     width: 30px;
-    height: 95px;
+    height: 90px;
     border: 0.5px solid #ddd;
     background: white;
     margin-top: 5px;
     position: fixed;
     z-index: 100;
-    /* box-shadow: 0 8px 6px -6px #aaa; */
+    box-shadow: 0 8px 6px -6px #ddd;
 }
 .volumeWrapper:hover, .volume-controls:hover{
     cursor: pointer;
-}
-.volume-controls:hover .volumeWrapper{
-    visibility: visible;
 }
 
 .volumeline{
@@ -188,7 +198,7 @@ a {
     height: 80%;
     color: #ddd;
     position: relative;
-    border-width: 0.5px;
+    border-width: 0.2px;
 }
 
 .volumeBar{
@@ -199,24 +209,26 @@ a {
     height: 80%;
     color: #f50;
     position: absolute;
-    border-width: 0.5px;
+    border-width: 0.2px;
 }
 
 .volumeIndicator{
     background: #f50;
-    height: 8px;
-    width: 8px;
+    height: 3px;
+    width: 3px;
     position: relative;
     border: 2px solid #f50;
     border-radius: 25px;
     bottom: 68px;
-    left: 10px;
+    left: 42%;
     display: flex;
 }
 
 .timestamp-container {
     margin: 10px;
     color: #777;
+    max-height: 140px;
+    overflow-y: auto;
 }
 
 .timestamp:hover {
@@ -233,6 +245,5 @@ a {
 }
 
 .hidden {
-    opacity: 0;
-    visibility: hidden;
+    display: none;
 }

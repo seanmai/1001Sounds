@@ -37,7 +37,10 @@ var track = {
     userurl: "",
     isPlaying: false
 };
-var favTracksLL = [];
+var tracklist = [];
+var showTracklist = true;
+var playlistLL = []; // Doubly linked list for playlists
+
 
 chrome.runtime.onMessage.addListener(receiver);
 
@@ -83,6 +86,8 @@ function receiver(request, sender, sendResponse){
                     SC.currentTrack.play();
                     SC.currentTrack.setVolume(volume);  // Maintains volume of previous track
                     track.isPlaying = true;
+                    tracklist = ["0:00 - 2017 Intro", "3:10 - 2018 Awake 1.0 Finale", "4:59 - Lost, Disarm You, ChosenYou(Illenium Trap Edit)", "7:16 - Say It(Illenium VIP Edit)", "11:58 - Needed You/Silence(Illenium Edit)", "14:01 - Angels & Airwaves-The Adventure(Illenium Remix)", "17:27 - Take You Down/Don’t Let Me Down(Illenium Edit)", "19:20 - Crawl Outta Love Intro/VIP edit", "22:54 - Where’d U Go(Fort Minor X Illenium Mashup)", "25:44 - Awake 2.0 Intro(Gold)"];
+                    showTracklist = true;
                 });
             },
             error: function(error){
