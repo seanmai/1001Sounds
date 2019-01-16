@@ -218,10 +218,6 @@ a {
     cursor: pointer
 }
 
-.hidden {
-    display: hidden;
-}
-
 .tracklist-btn{
     margin: 5px 15px;
     float: right;
@@ -229,4 +225,9 @@ a {
 }
 .tracklist-btn:hover {
     cursor: pointer;
+}
+
+.hidden {
+    opacity: 0;
+    display: hidden;
 }

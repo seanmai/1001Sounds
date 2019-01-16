@@ -19,5 +19,6 @@
         "default_popup": "index.html",
         "defualt_title": "1001Sounds",
         "default_icon": "soundcloud_icon.png"
-    }
+    },
+    "permissions": ["tabs"]
 }

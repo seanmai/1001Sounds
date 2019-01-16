@@ -41,13 +41,12 @@ inputURL.addEventListener('keypress', function(e){
                     setTimeout(function(){
                         setTrackInfo();
                         progressBarLoop();
-                    }, 850);
+                    }, 1000);
                 }
             });
         }
     }
 });
-
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -101,6 +100,19 @@ function toggleTracklist(){
     document.querySelector(".timestamp-container").classList.toggle("hidden");
 }
 
+autofillSearch();
+function autofillSearch(){
+    chrome.tabs.query({
+        active: true,
+        lastFocusedWindow: true
+    }, function(tabs) {
+        var tab = tabs[0];
+        if(matchWildCard(tab.url, "https://soundcloud.com/*/*")){
+            document.querySelector("#URL").setAttribute("value", tab.url);
+        }
+    });
+}
+
 //Controller set scrubber and button status -- MOVE INTO: set track info later, dont need the interval func
 //Kind of janky if statements --some repetition to clean up
 setInterval(function(){
@@ -119,6 +131,7 @@ function progressBarLoop(){
             progressBar.style.width = ((fractionPlayed*100).toString() + "%");
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
             currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.currentTime());
+            totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.getDuration());
         }, 100);
     }
 }
@@ -199,30 +212,34 @@ function millisToHoursAndMinutesAndSeconds(millis) {
 
 //Change later to pass in rect object as second arg
 function getTimelineOffset(e) {
-  var rect = progressWrapper.getBoundingClientRect();   //e.target doesn't work -sometimes targetted child div
-  var width = rect.width;
-  var height = rect.height;
-  var x = e.clientX - rect.left;
-  var y = e.clientY - rect.top;
-  return {
-    x,
-    y,
-    width,
-    height
-  }
+    var rect = progressWrapper.getBoundingClientRect();   //e.target doesn't work -sometimes targetted child div
+    var width = rect.width;
+    var height = rect.height;
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    return {
+        x,
+        y,
+        width,
+        height
+    }
 }
 function getVolumeOffset(e) {
-  var rect = volumeWrapper.getBoundingClientRect();   //e.target doesn't work -sometimes targetted child div
-  var width = rect.width;
-  var height = rect.height;
-  var x = e.clientX - rect.left;
-  var y = e.clientY - rect.top;
-  return {
-    x,
-    y,
-    width,
-    height
-  }
+    var rect = volumeWrapper.getBoundingClientRect();   //e.target doesn't work -sometimes targetted child div
+    var width = rect.width;
+    var height = rect.height;
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    return {
+        x,
+        y,
+        width,
+        height
+    }
+}
+
+function matchWildCard(str, rule) {
+  return new RegExp("^" + rule.split("*").join(".*") + "$").test(str);
 }
 
 // var embededPlayer = document.querySelector('iframe');

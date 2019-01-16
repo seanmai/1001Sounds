@@ -38,6 +38,8 @@ var track = {
     isPlaying: false
 };
 
+
+
 chrome.runtime.onMessage.addListener(receiver);
 
 //Receiver function to handle caught messages
