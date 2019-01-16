@@ -19,10 +19,11 @@ var currentTime = document.querySelector(".current-time p");
 var totalTime = document.querySelector(".total-time p");
 
 
-
 progressBarLoop();
 setTrackInfo();
 setVolumeBar();
+autofillSearch();
+
 
 // Parses URL and sends to background for GET request handling
 var inputURL = document.querySelector('#URL');
@@ -41,7 +42,7 @@ inputURL.addEventListener('keypress', function(e){
                     setTimeout(function(){
                         setTrackInfo();
                         progressBarLoop();
-                    }, 1000);
+                    }, 1250);
                 }
             });
         }
@@ -100,14 +101,13 @@ function toggleTracklist(){
     document.querySelector(".timestamp-container").classList.toggle("hidden");
 }
 
-autofillSearch();
 function autofillSearch(){
     chrome.tabs.query({
         active: true,
         lastFocusedWindow: true
     }, function(tabs) {
         var tab = tabs[0];
-        if(matchWildCard(tab.url, "https://soundcloud.com/*/*")){
+        if(matchWildCard(tab.url, "https://soundcloud.com/*/*") && (!matchWildCard(tab.url, "https://soundcloud.com/you/*")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/tracks")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/albums")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/sets")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/reposts"))){
             document.querySelector("#URL").setAttribute("value", tab.url);
         }
     });
