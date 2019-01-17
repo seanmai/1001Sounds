@@ -1,3 +1,6 @@
+const clientid1 = "175c043157ffae2c6d5fed16c3d95a4c";
+const clientid2 = "c202b469a633a7a5b15c9e10b5272b78";
+
 function LinkedList(){
     this.head = null;
     this.tail = null;
@@ -87,14 +90,14 @@ function receiver(request, sender, sendResponse){
         if(SC.currentTrack){
             volume = SC.currentTrack.getVolume();
         }
-        const URL = "https://api.soundcloud.com/resolve.json?url=" + request + "&client_id=175c043157ffae2c6d5fed16c3d95a4c";
+        const URL = "https://api.soundcloud.com/resolve.json?url=" + request + "&client_id=" + clientid2;
         $.ajax({
             url: URL,
             type: "GET",
             success: function(result){
                 // console.log(result);
                 SC.initialize({ // Initialize stream
-                    client_id: '175c043157ffae2c6d5fed16c3d95a4c'
+                    client_id: clientid2
                 });
                 track.id = result.id;
                 track.title = result.title;
