@@ -1,5 +1,7 @@
 var bgPage = chrome.extension.getBackgroundPage();
 var playButton = document.querySelector(".track-controls #play");
+var nextButton = document.querySelector(".track-controls #step-forward");
+var prevButton = document.querySelector(".track-controls #step-backward");
 var tracklistButton = document.querySelector(".tracklist-btn");
 var timeControls = document.querySelector(".time-controls");
 var progressWrapper = document.querySelector(".progressWrapper");
@@ -55,6 +57,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handles play button click
     playButton.addEventListener("click", play);
 
+    // Functions with argument () need to be put in callback, otherwise will be called every time
+    nextButton.addEventListener("click", function(){
+        nextSong(bgPage.relatedLL);
+    });
+    prevButton.addEventListener("click", function(){
+        prevSong(bgPage.relatedLL);
+    });
+
     tracklistButton.addEventListener("click", toggleTracklist);
 
     volumeControls.onmouseover = function(){
@@ -94,6 +104,10 @@ document.addEventListener('DOMContentLoaded', function() {
             play();
         } else if (key >= 48 && key <= 57){     // number keys
             bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.getDuration() * ((key - 48)/10));
+        } else if (key == 177){      // media back
+            prevSong(bgPage.relatedLL);
+        } else if (key = 176){       // media back
+            nextSong(bgPage.relatedLL);
         }
     });
 });
@@ -147,7 +161,7 @@ function progressBarLoop(){
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
             currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.currentTime());
             totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.getDuration());
-            if(bgPage.SC.currentTrack.currentTime() == bgPage.SC.currentTrack.getDuration()){
+            if(bgPage.SC.currentTrack.currentTime() == bgPage.SC.currentTrack.getDuration() && bgPage.SC.currentTrack.getDuration() > 0){
                 bgPage.SC.currentTrack.seek(0); // prevent from looping again
                 bgPage.SC.currentTrack.pause();
                 nextSong(bgPage.relatedLL);
