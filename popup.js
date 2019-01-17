@@ -283,13 +283,11 @@ function matchWildCard(str, rule) {
   return new RegExp("^" + rule.split("*").join(".*") + "$").test(str);
 }
 
-
 function nextSong(playlist){
     var currentTrackNode = playlist.head;
     while(currentTrackNode != null){
         if(bgPage.track.title == currentTrackNode.title){
             let message = currentTrackNode.next.trackurl;
-            console.log(message)
             chrome.runtime.sendMessage(message, function(response){
                 // Background script needs time to change variables
                 setTimeout(function(){
@@ -305,6 +303,22 @@ function nextSong(playlist){
     }
 }
 
-function prevSong(){
-
+function prevSong(playlist){
+    var currentTrackNode = playlist.head;
+    while(currentTrackNode != null){
+        if(bgPage.track.title == currentTrackNode.title){
+            let message = currentTrackNode.prev.trackurl;
+            chrome.runtime.sendMessage(message, function(response){
+                // Background script needs time to change variables
+                setTimeout(function(){
+                    setTrackInfo();
+                    setTracklist()
+                    progressBarLoop();
+                }, 1500);
+            });
+            break;
+        } else {
+            currentTrackNode = currentTrackNode.next;
+        }
+    }
 }

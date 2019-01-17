@@ -33,12 +33,12 @@ var track = {
 var tracklist = [];
 var showTracklist = true;
 var relatedLL = new LinkedList(); // Doubly linked list for playlists
-relatedLL.addNode(502978851,
-                   "Hard to Let Go [Utada Hikaru x RL Grime]",
-                   "https://i1.sndcdn.com/artworks-000408830763-78lvn9-large.jpg",
-                   "https://soundcloud.com/flipboit4midles/hard-to-let-go-utada-hikaru-x-rl-grime",
-                   "flipboitamidles",
-                   "http://soundcloud.com/flipboit4midles",
+relatedLL.addNode(343990669,
+                   "Tritonal - Now Or Never (Yetep Remix)",
+                   "https://i1.sndcdn.com/artworks-000244248659-yma0cb-large.jpg",
+                   "https://soundcloud.com/imyetep/tritonal-now-or-never-yetep-remix",
+                   "yetep",
+                   "http://soundcloud.com/imyetep",
                    false,
                    null,
                    null);
