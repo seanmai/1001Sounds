@@ -148,9 +148,9 @@ function progressBarLoop(){
             currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.currentTime());
             totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.getDuration());
             if(bgPage.SC.currentTrack.currentTime() == bgPage.SC.currentTrack.getDuration()){
-                console.log("SONG DONE!");
-                bgPage.SC.currentTrack.seek(0);
+                bgPage.SC.currentTrack.seek(0); // prevent from looping again
                 bgPage.SC.currentTrack.pause();
+                nextSong(bgPage.relatedLL);
             }
         }, 100);
     }
@@ -237,11 +237,11 @@ function seekProgressBar(e){
 }
 
 function incrementTime(){
-    bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.currentTime() + (5 * 1000));
+    (bgPage.SC.currentTrack.currentTime() <= (bgPage.SC.currentTrack.getDuration() - 5 * 1000) ? bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.currentTime() + (5 * 1000)) : bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.getDuration()));
 }
 
 function decrementTime(){
-    bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.currentTime() - (5 * 1000));
+    (bgPage.SC.currentTrack.currentTime() >= (5 * 1000) ? bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.currentTime() - (5 * 1000)) : bgPage.SC.currentTrack.seek(0));
 }
 
 function millisToHoursAndMinutesAndSeconds(millis) {
