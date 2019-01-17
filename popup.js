@@ -191,6 +191,15 @@ function setVolumeBar(){
     if(bgPage.SC.currentTrack){
         volumeBar.style.height = (((bgPage.SC.currentTrack.getVolume()*100) * 0.8).toString() + "%");
         volumeIndicator.style.bottom = ((-2 + bgPage.SC.currentTrack.getVolume()*70).toString() + "px");     //This shouldn't work but it does.. should be top height - vol*bottom height
+        if(bgPage.SC.currentTrack.getVolume() > 0.66){
+            document.querySelector(".volume-controls i").className = "fas fa-volume-up";
+        } else if(bgPage.SC.currentTrack.getVolume() > 0.33 && bgPage.SC.currentTrack.getVolume() <= 0.66){
+            document.querySelector(".volume-controls i").className = "fas fa-volume-down";
+        } else if(bgPage.SC.currentTrack.getVolume() > 0 && bgPage.SC.currentTrack.getVolume() <= 0.33){
+            document.querySelector(".volume-controls i").className = "fas fa-volume-off";
+        } else{
+            document.querySelector(".volume-controls i").className = "fas fa-volume-mute";
+        }
     }
 }
 
