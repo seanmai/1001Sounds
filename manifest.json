@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "1001Sounds",
     "version": "0.1",
-    "description": "Nests a media player for SoundCloud inside the browser with added functionality!",
+    "description": "",
     "content_security_policy": "script-src 'self' https://*.jquery.com; object-src 'self'",
     "content_scripts": [
         {
@@ -18,7 +18,7 @@
     "browser_action": {
         "default_popup": "index.html",
         "defualt_title": "1001Sounds",
-        "default_icon": "soundcloud_icon.png"
+        "default_icon": "extension-icon.png"
     },
     "permissions": ["tabs"]
 }

@@ -92,6 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
             setVolumeBar();
         } else if (key === 32 || key === 179){     // space bar and media play
             play();
+        } else if (key >= 48 && key <= 57){     // number keys
+            bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.getDuration() * ((key - 48)/10));
         }
     });
 });
