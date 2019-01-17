@@ -65,6 +65,10 @@ document.addEventListener('DOMContentLoaded', function() {
         prevSong(bgPage.relatedLL);
     });
 
+    volumeControls.addEventListener("click", function(){
+        toggleMute();
+    });
+
     tracklistButton.addEventListener("click", toggleTracklist);
 
     volumeControls.onmouseover = function(){
@@ -104,11 +108,12 @@ document.addEventListener('DOMContentLoaded', function() {
             play();
         } else if (key >= 48 && key <= 57){     // number keys
             bgPage.SC.currentTrack.seek(bgPage.SC.currentTrack.getDuration() * ((key - 48)/10));
-        } else if (key == 177){      // media back
-            prevSong(bgPage.relatedLL);
-        } else if (key = 176){       // media back
-            nextSong(bgPage.relatedLL);
         }
+        // else if (key == 177){      // media back
+        //     prevSong(bgPage.relatedLL);
+        // } else if (key = 176){       // media back
+        //     nextSong(bgPage.relatedLL);
+        // }
     });
 });
 
@@ -123,6 +128,17 @@ function sclogin(){
     let message = "login"
     chrome.runtime.sendMessage(message, function(response){
     });
+}
+
+function toggleMute(){
+    console.log(bgPage.volume);
+    if(bgPage.SC.currentTrack.getVolume() > 0){
+        bgPage.volume = bgPage.SC.currentTrack.getVolume();
+        bgPage.SC.currentTrack.setVolume(0);
+    } else {
+        bgPage.SC.currentTrack.setVolume(bgPage.volume);
+    }
+    setVolumeBar();
 }
 
 function toggleTracklist(){
@@ -183,16 +199,19 @@ function seekVolumeBar(e){
         var offset = getVolumeOffset(e);
         var yOffsetFrac = ((offset.height-offset.y) / offset.height);
         bgPage.SC.currentTrack.setVolume(yOffsetFrac);
+        bgPage.volume = yOffsetFrac;
         setVolumeBar();
     }
 }
 
 function incrementVolume(){
     (bgPage.SC.currentTrack.getVolume() <= 0.95) ? (bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() + 0.05)) : bgPage.SC.currentTrack.setVolume(1);
+    bgPage.volume = bgPage.SC.currentTrack.getVolume();
 }
 
 function decrementVolume(){
     (bgPage.SC.currentTrack.getVolume() >= 0.05) ? (bgPage.SC.currentTrack.setVolume(bgPage.SC.currentTrack.getVolume() - 0.05)) : bgPage.SC.currentTrack.setVolume(0);
+    bgPage.volume = bgPage.SC.currentTrack.getVolume();
 }
 
 function setTrackInfo(){

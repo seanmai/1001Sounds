@@ -24,6 +24,7 @@ function TrackNode(id, title, artwork, trackurl, username, userurl, isPlaying, n
 }
 
 var interval = 0;
+var volume = 1;
 var track = {
     id: 0,
     title: "",
@@ -86,7 +87,7 @@ function receiver(request, sender, sendResponse){
             sendResponse();
         }
     } else if(request.includes("http")){    //If message is a http, send GET request to pull track data
-        var volume = 1;
+        volume = 1;
         if(SC.currentTrack){
             volume = SC.currentTrack.getVolume();
         }
