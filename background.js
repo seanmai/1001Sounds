@@ -1,3 +1,25 @@
+function LinkedList(){
+    this.head = null;
+    this.tail = null;
+}
+LinkedList.prototype.addNode = function(id, title, artwork, trackurl, username, userurl, isPlaying) {
+    const newNode = new TrackNode(id, title, artwork, trackurl, username, userurl, isPlaying, null, this.tail);
+    if (this.tail) this.tail.next = newNode;
+    else this.head = newNode;
+    this.tail = newNode;
+};
+function TrackNode(id, title, artwork, trackurl, username, userurl, isPlaying, next, prev){
+    this.id = id;
+    this.title = title;
+    this.artwork = artwork;
+    this.trackurl = trackurl;
+    this.username = username;
+    this.userurl = userurl;
+    this.isPlaying = isPlaying;
+    this.next = next;
+    this.prev = prev;
+}
+
 var interval = 0;
 var track = {
     id: 0,
@@ -10,8 +32,36 @@ var track = {
 };
 var tracklist = [];
 var showTracklist = true;
-var playlistLL = []; // Doubly linked list for playlists
-
+var relatedLL = new LinkedList(); // Doubly linked list for playlists
+relatedLL.addNode(502978851,
+                   "Hard to Let Go [Utada Hikaru x RL Grime]",
+                   "https://i1.sndcdn.com/artworks-000408830763-78lvn9-large.jpg",
+                   "https://soundcloud.com/flipboit4midles/hard-to-let-go-utada-hikaru-x-rl-grime",
+                   "flipboitamidles",
+                   "http://soundcloud.com/flipboit4midles",
+                   false,
+                   null,
+                   null);
+relatedLL.addNode(550449036,
+                   "ILLENIUM Unreleased 2018 Edits",
+                   "https://i1.sndcdn.com/artworks-000464224599-8henx9-large.jpg",
+                   "https://soundcloud.com/illeniumbootlegs/illenium-unreleased-2018-edits-full-mix",
+                   "ILLENIUM BOOTLEGS",
+                   "http://soundcloud.com/illeniumbootlegs",
+                   false,
+                   null,
+                   null);
+relatedLL.addNode(502978851,
+                  "Hard to Let Go [Utada Hikaru x RL Grime]",
+                  "https://i1.sndcdn.com/artworks-000408830763-78lvn9-large.jpg",
+                  "https://soundcloud.com/flipboit4midles/hard-to-let-go-utada-hikaru-x-rl-grime",
+                  "flipboitamidles",
+                  "http://soundcloud.com/flipboit4midles",
+                  false,
+                  null,
+                  null);
+var playlistLL = [];
+var favoritesLL = [];
 
 chrome.runtime.onMessage.addListener(receiver);
 
@@ -95,5 +145,4 @@ function receiver(request, sender, sendResponse){
     //     })
     //     sendResponse();
     }
-
 }

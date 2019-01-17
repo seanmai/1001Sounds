@@ -147,6 +147,11 @@ function progressBarLoop(){
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
             currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.currentTime());
             totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.getDuration());
+            if(bgPage.SC.currentTrack.currentTime() == bgPage.SC.currentTrack.getDuration()){
+                console.log("SONG DONE!");
+                bgPage.SC.currentTrack.seek(0);
+                bgPage.SC.currentTrack.pause();
+            }
         }, 100);
     }
 }
@@ -276,4 +281,30 @@ function getVolumeOffset(e) {
 
 function matchWildCard(str, rule) {
   return new RegExp("^" + rule.split("*").join(".*") + "$").test(str);
+}
+
+
+function nextSong(playlist){
+    var currentTrackNode = playlist.head;
+    while(currentTrackNode != null){
+        if(bgPage.track.title == currentTrackNode.title){
+            let message = currentTrackNode.next.trackurl;
+            console.log(message)
+            chrome.runtime.sendMessage(message, function(response){
+                // Background script needs time to change variables
+                setTimeout(function(){
+                    setTrackInfo();
+                    setTracklist()
+                    progressBarLoop();
+                }, 1500);
+            });
+            break;
+        } else {
+            currentTrackNode = currentTrackNode.next;
+        }
+    }
+}
+
+function prevSong(){
+
 }
