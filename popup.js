@@ -19,6 +19,7 @@ var artwork = document.querySelector(".artwork");
 var currentTime = document.querySelector(".current-time p");
 var totalTime = document.querySelector(".total-time p");
 var timestampContainer = document.querySelector(".timestamp-container");
+var playlistContainer = document.querySelector(".playlist-container");
 
 
 progressBarLoop();
@@ -29,6 +30,7 @@ autofillSearch();
 if(!bgPage.SC.currentTrack){
     trackContainer.classList.add("hidden");
 }
+setPlaylist();
 
 
 // Parses URL and sends to background for GET request handling
@@ -49,6 +51,7 @@ inputURL.addEventListener('keypress', function(e){
                         trackContainer.classList.remove("hidden");
                         setTrackInfo();
                         setTracklist()
+                        setPlaylist();
                         progressBarLoop();
                     }, 1750);
                 }
@@ -266,6 +269,29 @@ function setTracklist(){
         }
         tracklistButton.classList.remove("hidden");
     }
+}
+
+function setPlaylist(){
+    playlistContainer.innerHTML = "";
+    // playlistButton.classList.add("hidden");
+    for(var i = 0; i < bgPage.relatedPlaylist.length; i++){
+        var p = document.createElement("p");
+        p.classList.add("playlist-track");
+        var node = document.createTextNode(bgPage.relatedPlaylist[i].title);
+        p.appendChild(node);
+        playlistContainer.appendChild(p);
+    }
+    // if(!bgPage.showPlaylist){
+    //     playlistContainer.classList.add("hidden");
+    // } else {
+    //     // Handles timestamp click
+    //     document.querySelectorAll(".playlist-track").forEach(function(ts) {
+    //         ts.addEventListener("click", function(){
+    //             // sendMessage
+    //         });
+    //     });
+    //     playlistContainer.classList.remove("hidden");
+    // }
 }
 
 function seekTimestamp(){

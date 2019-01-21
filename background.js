@@ -22,6 +22,15 @@ function TrackNode(id, title, artwork, trackurl, username, userurl, isPlaying, n
     this.next = next;
     this.prev = prev;
 }
+function Track(id, title, artwork, trackurl, username, userurl, isPlaying){
+    this.id = id;
+    this.title = title;
+    this.artwork = artwork;
+    this.trackurl = trackurl;
+    this.username = username;
+    this.userurl = userurl;
+    this.isPlaying = isPlaying;
+}
 
 var interval = 0;
 var volume = 1;
@@ -36,6 +45,28 @@ var track = {
 };
 var tracklist = [];
 var showTracklist = true;
+var showPlaylist = false;
+var relatedPlaylist = [new Track(343990669,
+                                 "Tritonal - Now Or Never (Yetep Remix)",
+                                 "https://i1.sndcdn.com/artworks-000244248659-yma0cb-large.jpg",
+                                 "https://soundcloud.com/imyetep/tritonal-now-or-never-yetep-remix",
+                                 "yetep",
+                                 "http://soundcloud.com/imyetep",
+                                 false),
+                       new Track(550449036,
+                                 "ILLENIUM Unreleased 2018 Edits",
+                                 "https://i1.sndcdn.com/artworks-000464224599-8henx9-large.jpg",
+                                 "https://soundcloud.com/illeniumbootlegs/illenium-unreleased-2018-edits-full-mix",
+                                 "ILLENIUM BOOTLEGS",
+                                 "http://soundcloud.com/illeniumbootlegs",
+                                  false),
+                       new Track(502978851,
+                                 "Hard to Let Go [Utada Hikaru x RL Grime]",
+                                 "https://i1.sndcdn.com/artworks-000408830763-78lvn9-large.jpg",
+                                 "https://soundcloud.com/flipboit4midles/hard-to-let-go-utada-hikaru-x-rl-grime",
+                                 "flipboitamidles",
+                                 "http://soundcloud.com/flipboit4midles",
+                                 false)]
 var relatedLL = new LinkedList(); // Doubly linked list for playlists
 relatedLL.addNode(343990669,
                    "Tritonal - Now Or Never (Yetep Remix)",
@@ -112,8 +143,8 @@ function receiver(request, sender, sendResponse){
                     SC.currentTrack.setVolume(volume);  // Maintains volume of previous track
                     track.isPlaying = true;
                     setTimeout(function(){
-                        console.log(SC.currentTrack.getDuration());
-                        console.log(SC.currentTrack.getDuration() > (10 * 60 * 1000));
+                        // console.log(SC.currentTrack.getDuration());
+                        // console.log(SC.currentTrack.getDuration() > (10 * 60 * 1000));
                         if(SC.currentTrack.getDuration() > (10 * 60 * 1000)){
                             tracklist = ["0:00 - 2017 Intro", "3:10 - 2018 Awake 1.0 Finale", "4:59 - Lost, Disarm You, ChosenYou(Illenium Trap Edit)", "7:16 - Say It(Illenium VIP Edit)", "11:58 - Needed You/Silence(Illenium Edit)", "14:01 - Angels & Airwaves-The Adventure(Illenium Remix)", "17:27 - Take You Down/Don’t Let Me Down(Illenium Edit)", "19:20 - Crawl Outta Love Intro/VIP edit", "22:54 - Where’d U Go(Fort Minor X Illenium Mashup)", "25:44 - Awake 2.0 Intro(Gold)"];
                         } else {
