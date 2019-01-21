@@ -1,27 +1,7 @@
 const clientid1 = "175c043157ffae2c6d5fed16c3d95a4c";
 const clientid2 = "c202b469a633a7a5b15c9e10b5272b78";
 
-function LinkedList(){
-    this.head = null;
-    this.tail = null;
-}
-LinkedList.prototype.addNode = function(id, title, artwork, trackurl, username, userurl, isPlaying) {
-    const newNode = new TrackNode(id, title, artwork, trackurl, username, userurl, isPlaying, null, this.tail);
-    if (this.tail) this.tail.next = newNode;
-    else this.head = newNode;
-    this.tail = newNode;
-};
-function TrackNode(id, title, artwork, trackurl, username, userurl, isPlaying, next, prev){
-    this.id = id;
-    this.title = title;
-    this.artwork = artwork;
-    this.trackurl = trackurl;
-    this.username = username;
-    this.userurl = userurl;
-    this.isPlaying = isPlaying;
-    this.next = next;
-    this.prev = prev;
-}
+
 function Track(id, title, artwork, trackurl, username, userurl, isPlaying){
     this.id = id;
     this.title = title;
@@ -46,6 +26,7 @@ var track = {
 var tracklist = [];
 var showTracklist = true;
 var showPlaylist = false;
+
 var relatedPlaylist = [new Track(343990669,
                                  "Tritonal - Now Or Never (Yetep Remix)",
                                  "https://i1.sndcdn.com/artworks-000244248659-yma0cb-large.jpg",
@@ -67,34 +48,6 @@ var relatedPlaylist = [new Track(343990669,
                                  "flipboitamidles",
                                  "http://soundcloud.com/flipboit4midles",
                                  false)]
-var relatedLL = new LinkedList(); // Doubly linked list for playlists
-relatedLL.addNode(343990669,
-                   "Tritonal - Now Or Never (Yetep Remix)",
-                   "https://i1.sndcdn.com/artworks-000244248659-yma0cb-large.jpg",
-                   "https://soundcloud.com/imyetep/tritonal-now-or-never-yetep-remix",
-                   "yetep",
-                   "http://soundcloud.com/imyetep",
-                   false,
-                   null,
-                   null);
-relatedLL.addNode(550449036,
-                   "ILLENIUM Unreleased 2018 Edits",
-                   "https://i1.sndcdn.com/artworks-000464224599-8henx9-large.jpg",
-                   "https://soundcloud.com/illeniumbootlegs/illenium-unreleased-2018-edits-full-mix",
-                   "ILLENIUM BOOTLEGS",
-                   "http://soundcloud.com/illeniumbootlegs",
-                   false,
-                   null,
-                   null);
-relatedLL.addNode(502978851,
-                  "Hard to Let Go [Utada Hikaru x RL Grime]",
-                  "https://i1.sndcdn.com/artworks-000408830763-78lvn9-large.jpg",
-                  "https://soundcloud.com/flipboit4midles/hard-to-let-go-utada-hikaru-x-rl-grime",
-                  "flipboitamidles",
-                  "http://soundcloud.com/flipboit4midles",
-                  false,
-                  null,
-                  null);
 var playlistLL = [];
 var favoritesLL = [];
 
@@ -117,7 +70,13 @@ function receiver(request, sender, sendResponse){
             //sendResponse to sender
             sendResponse();
         }
-    } else if(request.includes("http")){    //If message is a http, send GET request to pull track data
+    } else if(request.includes("/sets/")){
+        volume = 1;
+        if(SC.currentTrack){
+            volume = SC.currentTrack.getVolume();
+        }
+        const URL = "https://api.soundcloud.com/resolve.json?url=" + request + "&client_id=" + clientid2;
+    } else if(request.includes("http")){    //If message is a http, send GET request to pull track data --pretty BAD logic, should check something else. works for now
         volume = 1;
         if(SC.currentTrack){
             volume = SC.currentTrack.getVolume();

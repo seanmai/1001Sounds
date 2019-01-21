@@ -198,7 +198,7 @@ function progressBarLoop(){
             progressIndicator.style.left = ((fractionPlayed*100).toString() + "%");
             currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.currentTime());
             totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.getDuration());
-            if(bgPage.SC.currentTrack.currentTime() == bgPage.SC.currentTrack.getDuration() && bgPage.SC.currentTrack.getDuration() > 0){
+            if(bgPage.SC.currentTrack.currentTime() == bgPage.SC.currentTrack.getDuration() && bgPage.SC.currentTrack.getDuration() > 0){ //MOVE THIS TO BACKGROUND
                 bgPage.SC.currentTrack.seek(0);
                 bgPage.SC.currentTrack.play();
 
@@ -263,6 +263,10 @@ function setTrackInfo(){
 function setTracklist(){
     timestampContainer.innerHTML = "";
     tracklistButton.classList.add("hidden");
+    var h4 = document.createElement("h4");
+    var h4node = document.createTextNode("Tracklist: ");
+    h4.appendChild(h4node);
+    timestampContainer.appendChild(h4);
     if(bgPage.tracklist.length > 0){
         for(var i = 0; i < bgPage.tracklist.length; i++){
             var p = document.createElement("p");
@@ -286,7 +290,10 @@ function setTracklist(){
 
 function setPlaylist(){
     playlistContainer.innerHTML = "";
-    // playlistButton.classList.add("hidden");
+    var h4 = document.createElement("h4");
+    var h4node = document.createTextNode("Next up: ");
+    h4.appendChild(h4node);
+    playlistContainer.appendChild(h4);
     for(var i = 0; i < bgPage.relatedPlaylist.length; i++){
         var p = document.createElement("p");
         p.classList.add("playlist-track");

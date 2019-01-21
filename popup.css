@@ -240,8 +240,11 @@ a {
 .timestamp-container, .playlist-container {
     margin: 10px;
     color: #777;
-    max-height: 140px;
+    max-height: 144px;
     overflow-y: auto;
+}
+.timestamp-container h4, .playlist-container h4 {
+    margin: 0;
 }
 
 .timestamp:hover, .playlist-track:hover{
