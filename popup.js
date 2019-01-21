@@ -1,4 +1,5 @@
 var bgPage = chrome.extension.getBackgroundPage();
+var trackContainer = document.querySelector(".track-container");
 var playButton = document.querySelector(".track-controls #play");
 var nextButton = document.querySelector(".track-controls #step-forward");
 var prevButton = document.querySelector(".track-controls #step-backward");
@@ -22,9 +23,12 @@ var timestampContainer = document.querySelector(".timestamp-container");
 
 progressBarLoop();
 setTrackInfo();
-setTracklist()
+setTracklist();
 setVolumeBar();
 autofillSearch();
+if(!bgPage.SC.currentTrack){
+    trackContainer.classList.add("hidden");
+}
 
 
 // Parses URL and sends to background for GET request handling
@@ -42,10 +46,11 @@ inputURL.addEventListener('keypress', function(e){
                 } else {
                     // Background script needs time to change variables
                     setTimeout(function(){
+                        trackContainer.classList.remove("hidden");
                         setTrackInfo();
                         setTracklist()
                         progressBarLoop();
-                    }, 1500);
+                    }, 1750);
                 }
             });
         }
@@ -178,9 +183,12 @@ function progressBarLoop(){
             currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.currentTime());
             totalTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.getDuration());
             if(bgPage.SC.currentTrack.currentTime() == bgPage.SC.currentTrack.getDuration() && bgPage.SC.currentTrack.getDuration() > 0){
-                bgPage.SC.currentTrack.seek(0); // prevent from looping again
-                bgPage.SC.currentTrack.pause();
-                nextSong(bgPage.relatedLL);
+                bgPage.SC.currentTrack.seek(0);
+                bgPage.SC.currentTrack.play();
+
+                // bgPage.SC.currentTrack.seek(0); // prevent from looping again
+                // bgPage.SC.currentTrack.pause();
+                // nextSong(bgPage.relatedLL);
             }
         }, 100);
     }
@@ -237,6 +245,8 @@ function setTrackInfo(){
 }
 
 function setTracklist(){
+    timestampContainer.innerHTML = "";
+    tracklistButton.classList.add("hidden");
     if(bgPage.tracklist.length > 0){
         for(var i = 0; i < bgPage.tracklist.length; i++){
             var p = document.createElement("p");
@@ -254,6 +264,7 @@ function setTracklist(){
             });
             timestampContainer.classList.remove("hidden");
         }
+        tracklistButton.classList.remove("hidden");
     }
 }
 
@@ -267,7 +278,6 @@ function seekTimestamp(){
     }
     bgPage.SC.currentTrack.seek(timeMilli);
     currentTime.innerHTML = millisToHoursAndMinutesAndSeconds(bgPage.SC.currentTrack.currentTime());
-    console.log(bgPage.SC.currentTrack.currentTime());
 }
 
 function seekProgressBar(e){
