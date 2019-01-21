@@ -4,6 +4,7 @@ var playButton = document.querySelector(".track-controls #play");
 var nextButton = document.querySelector(".track-controls #step-forward");
 var prevButton = document.querySelector(".track-controls #step-backward");
 var tracklistButton = document.querySelector(".tracklist-btn");
+var playlistButton = document.querySelector(".playlist-btn");
 var timeControls = document.querySelector(".time-controls");
 var progressWrapper = document.querySelector(".progressWrapper");
 var progressBar = document.querySelector(".progressBar");
@@ -29,8 +30,9 @@ setVolumeBar();
 autofillSearch();
 if(!bgPage.SC.currentTrack){
     trackContainer.classList.add("hidden");
+} else {
+    setPlaylist();
 }
-setPlaylist();
 
 
 // Parses URL and sends to background for GET request handling
@@ -53,7 +55,7 @@ inputURL.addEventListener('keypress', function(e){
                         setTracklist()
                         setPlaylist();
                         progressBarLoop();
-                    }, 1750);
+                    }, 2000);
                 }
             });
         }
@@ -78,6 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     tracklistButton.addEventListener("click", toggleTracklist);
+
+    playlistButton.addEventListener("click", togglePlaylist);
 
     volumeControls.onmouseover = function(){
         volumeWrapper.style.visibility = ("visible");
@@ -151,7 +155,16 @@ function toggleMute(){
 
 function toggleTracklist(){
     timestampContainer.classList.toggle("hidden");
+    playlistContainer.classList.add("hidden");
     bgPage.showTracklist = !(bgPage.showTracklist);
+    bgPage.showPlaylist = false;
+}
+
+function togglePlaylist(){
+    playlistContainer.classList.toggle("hidden");
+    timestampContainer.classList.add("hidden");
+    bgPage.showPlaylist = !(bgPage.showPlaylist);
+    bgPage.showTracklist = false;
 }
 
 function autofillSearch(){
@@ -278,20 +291,23 @@ function setPlaylist(){
         var p = document.createElement("p");
         p.classList.add("playlist-track");
         var node = document.createTextNode(bgPage.relatedPlaylist[i].title);
+        if(bgPage.relatedPlaylist[i].title == bgPage.track.title){
+            p.style.color = ("#f70");
+        }
         p.appendChild(node);
         playlistContainer.appendChild(p);
     }
-    // if(!bgPage.showPlaylist){
-    //     playlistContainer.classList.add("hidden");
-    // } else {
+    if(!bgPage.showPlaylist){
+        playlistContainer.classList.add("hidden");
+    } else {
     //     // Handles timestamp click
     //     document.querySelectorAll(".playlist-track").forEach(function(ts) {
     //         ts.addEventListener("click", function(){
     //             // sendMessage
     //         });
     //     });
-    //     playlistContainer.classList.remove("hidden");
-    // }
+        playlistContainer.classList.remove("hidden");
+    }
 }
 
 function seekTimestamp(){

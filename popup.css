@@ -237,23 +237,23 @@ a {
     display: flex;
 }
 
-.timestamp-container {
+.timestamp-container, .playlist-container {
     margin: 10px;
     color: #777;
     max-height: 140px;
     overflow-y: auto;
 }
 
-.timestamp:hover {
+.timestamp:hover, .playlist-track:hover{
     cursor: pointer
 }
 
-.tracklist-btn{
-    margin: 5px 13px;
+.tracklist-btn, .playlist-btn{
+    margin: 5px;
     float: right;
     position: relative;
 }
-.tracklist-btn:hover {
+.tracklist-btn:hover, .playlist-btn:hover {
     cursor: pointer;
 }
 
