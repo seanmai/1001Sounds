@@ -320,11 +320,8 @@ function setPlaylist(){
 
 function selectTrack(){
     var trackTitle = this.innerHTML.split('.  ')[1];
-    console.log(trackTitle);
     bgPage.indexPlaying = bgPage.playlist.map(function(e) { return e.title; }).indexOf(trackTitle);
-    console.log(bgPage.playlist.map(function(e) { return e.title; }).indexOf(trackTitle));
     var message = bgPage.playlistURL;
-    console.log(message);
     chrome.runtime.sendMessage(message, function(response){
         // Background script needs time to change variables
         setTimeout(function(){
@@ -406,41 +403,29 @@ function matchWildCard(str, rule) {
 }
 
 function nextSong(playlist){
-    var currentTrackNode = playlist.head;
-    while(currentTrackNode != null){
-        if(bgPage.track.title == currentTrackNode.title){
-            let message = currentTrackNode.next.trackurl;
-            chrome.runtime.sendMessage(message, function(response){
-                // Background script needs time to change variables
-                setTimeout(function(){
-                    setTrackInfo();
-                    setTracklist()
-                    progressBarLoop();
-                }, 1500);
-            });
-            break;
-        } else {
-            currentTrackNode = currentTrackNode.next;
-        }
-    }
+    (bgPage.indexPlaying >= (bgPage.playlist.length-1) ? bgPage.indexPlaying = 0 : bgPage.indexPlaying += 1);
+    var message = bgPage.playlistURL;
+    chrome.runtime.sendMessage(message, function(response){
+        // Background script needs time to change variables
+        setTimeout(function(){
+            setTrackInfo();
+            setTracklist();
+            setPlaylist();
+            progressBarLoop();
+        }, 2000);
+    });
 }
 
 function prevSong(playlist){
-    var currentTrackNode = playlist.head;
-    while(currentTrackNode != null){
-        if(bgPage.track.title == currentTrackNode.title){
-            let message = currentTrackNode.prev.trackurl;
-            chrome.runtime.sendMessage(message, function(response){
-                // Background script needs time to change variables
-                setTimeout(function(){
-                    setTrackInfo();
-                    setTracklist()
-                    progressBarLoop();
-                }, 1500);
-            });
-            break;
-        } else {
-            currentTrackNode = currentTrackNode.next;
-        }
-    }
+    (bgPage.indexPlaying <= 0 ? bgPage.indexPlaying = (bgPage.playlist.length-1) : bgPage.indexPlaying -= 1);
+    var message = bgPage.playlistURL;
+    chrome.runtime.sendMessage(message, function(response){
+        // Background script needs time to change variables
+        setTimeout(function(){
+            setTrackInfo();
+            setTracklist();
+            setPlaylist();
+            progressBarLoop();
+        }, 2000);
+    });
 }
