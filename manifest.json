@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "1001Sounds",
-    "version": "0.1",
+    "version": "0.2",
     "description": "",
     "content_security_policy": "script-src 'self' https://*.jquery.com; object-src 'self'",
     "content_scripts": [
@@ -20,5 +20,5 @@
         "defualt_title": "1001Sounds",
         "default_icon": "extension-icon.png"
     },
-    "permissions": ["tabs"]
+    "permissions": ["https://soundcloud.com/*"]
 }

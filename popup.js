@@ -21,22 +21,22 @@ var currentTime = document.querySelector(".current-time p");
 var totalTime = document.querySelector(".total-time p");
 var timestampContainer = document.querySelector(".timestamp-container");
 var playlistContainer = document.querySelector(".playlist-container");
+var inputURL = document.querySelector('#URL');
 
 
 progressBarLoop();
 setTrackInfo();
-setTracklist();
 setVolumeBar();
 autofillSearch();
 if(!bgPage.SC.currentTrack){
     trackContainer.classList.add("hidden");
 } else {
     setPlaylist();
+    setTracklist();
 }
 
 
 // Parses URL and sends to background for GET request handling
-var inputURL = document.querySelector('#URL');
 inputURL.addEventListener('keypress', function(e){
     var key = e.which || e.keyCode;
     if (key === 13) { // 13 is enter
@@ -174,7 +174,8 @@ function autofillSearch(){
     }, function(tabs) {
         var tab = tabs[0];
         if(matchWildCard(tab.url, "https://soundcloud.com/*/*") && (!matchWildCard(tab.url, "https://soundcloud.com/you/*")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/tracks")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/albums")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/sets")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/reposts"))){
-            document.querySelector("#URL").setAttribute("value", tab.url);
+            inputURL.setAttribute("value", tab.url);
+            inputURL.focus();
         }
     });
 }
@@ -182,10 +183,12 @@ function autofillSearch(){
 //Controller set scrubber and button status -- MOVE INTO: set track info later, dont need the interval func
 //Kind of janky if statements --some repetition to clean up
 setInterval(function(){
-    if((playButton.className == ("fas fa-play")) && (bgPage.track.isPlaying)){
-        playButton.className = "fas fa-pause";
-    } else if((playButton.className == ("fas fa-pause")) && (!bgPage.track.isPlaying)){
-        playButton.className = "fas fa-play";
+    if(bgPage.track != null){
+        if((playButton.className == ("fas fa-play")) && (bgPage.track.isPlaying)){
+            playButton.className = "fas fa-pause";
+        } else if((playButton.className == ("fas fa-pause")) && (!bgPage.track.isPlaying)){
+            playButton.className = "fas fa-play";
+        }
     }
 }, 100);
 
@@ -263,11 +266,11 @@ function setTrackInfo(){
 function setTracklist(){
     timestampContainer.innerHTML = "";
     tracklistButton.classList.add("hidden");
-    var h4 = document.createElement("h4");
-    var h4node = document.createTextNode("Tracklist: ");
-    h4.appendChild(h4node);
-    timestampContainer.appendChild(h4);
     if(bgPage.tracklist.length > 0){
+        var h4 = document.createElement("h4");
+        var h4node = document.createTextNode("Tracklist: ");
+        h4.appendChild(h4node);
+        timestampContainer.appendChild(h4);
         for(var i = 0; i < bgPage.tracklist.length; i++){
             var p = document.createElement("p");
             p.classList.add("timestamp");
@@ -293,12 +296,12 @@ function setPlaylist(){
     var h4 = document.createElement("h4");
     var h4node = document.createTextNode("Next up: ");
     h4.appendChild(h4node);
-    playlistContainer.appendChild(h4);
-    for(var i = 0; i < bgPage.relatedPlaylist.length; i++){
+    // playlistContainer.appendChild(h4);
+    for(var i = 0; i < bgPage.playlist.length; i++){
         var p = document.createElement("p");
         p.classList.add("playlist-track");
-        var node = document.createTextNode(bgPage.relatedPlaylist[i].title);
-        if(bgPage.relatedPlaylist[i].title == bgPage.track.title){
+        var node = document.createTextNode((i+1) + ".  " + bgPage.playlist[i].title);
+        if(bgPage.playlist[i].title == bgPage.track.title){
             p.style.color = ("#f70");
         }
         p.appendChild(node);
@@ -307,14 +310,32 @@ function setPlaylist(){
     if(!bgPage.showPlaylist){
         playlistContainer.classList.add("hidden");
     } else {
-    //     // Handles timestamp click
-    //     document.querySelectorAll(".playlist-track").forEach(function(ts) {
-    //         ts.addEventListener("click", function(){
-    //             // sendMessage
-    //         });
-    //     });
         playlistContainer.classList.remove("hidden");
     }
+    // Handles track click
+    document.querySelectorAll(".playlist-track").forEach(function(plt) {
+        plt.addEventListener("click", selectTrack);
+    });
+}
+
+function selectTrack(){
+    var trackTitle = this.innerHTML.split('.  ')[1];
+    console.log(trackTitle);
+    bgPage.indexPlaying = bgPage.playlist.map(function(e) { return e.title; }).indexOf(trackTitle);
+    console.log(bgPage.playlist.map(function(e) { return e.title; }).indexOf(trackTitle));
+    var message = bgPage.playlistURL;
+    console.log(message);
+    chrome.runtime.sendMessage(message, function(response){
+        // Background script needs time to change variables
+        setTimeout(function(){
+            bgPage.showTracklist = false;
+            bgPage.showPlaylist = true;
+            setTrackInfo();
+            setTracklist();
+            setPlaylist();
+            progressBarLoop();
+        }, 2000);
+    });
 }
 
 function seekTimestamp(){
