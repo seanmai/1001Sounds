@@ -20,27 +20,6 @@ var showTracklist = true;
 var showPlaylist = false;
 var indexPlaying = 0;
 var playlistURL = "";
-var relatedPlaylist = [new Track(343990669,
-                                 "Tritonal - Now Or Never (Yetep Remix)",
-                                 "https://i1.sndcdn.com/artworks-000244248659-yma0cb-large.jpg",
-                                 "https://soundcloud.com/imyetep/tritonal-now-or-never-yetep-remix",
-                                 "yetep",
-                                 "http://soundcloud.com/imyetep",
-                                 false),
-                       new Track(550449036,
-                                 "ILLENIUM Unreleased 2018 Edits",
-                                 "https://i1.sndcdn.com/artworks-000464224599-8henx9-large.jpg",
-                                 "https://soundcloud.com/illeniumbootlegs/illenium-unreleased-2018-edits-full-mix",
-                                 "ILLENIUM BOOTLEGS",
-                                 "http://soundcloud.com/illeniumbootlegs",
-                                  false),
-                       new Track(502978851,
-                                 "Hard to Let Go [Utada Hikaru x RL Grime]",
-                                 "https://i1.sndcdn.com/artworks-000408830763-78lvn9-large.jpg",
-                                 "https://soundcloud.com/flipboit4midles/hard-to-let-go-utada-hikaru-x-rl-grime",
-                                 "flipboitamidles",
-                                 "http://soundcloud.com/flipboit4midles",
-                                 false)]
 var playlist = [];
 var favorites = [];
 

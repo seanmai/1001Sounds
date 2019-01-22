@@ -69,10 +69,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Functions with argument () need to be put in callback, otherwise will be called every time
     nextButton.addEventListener("click", function(){
-        nextSong(bgPage.relatedLL);
+        nextSong();
     });
     prevButton.addEventListener("click", function(){
-        prevSong(bgPage.relatedLL);
+        prevSong();
     });
 
     volumeControls.addEventListener("click", function(){
@@ -282,11 +282,11 @@ function setTracklist(){
             timestampContainer.classList.add("hidden");
         } else {
             // Handles timestamp click
-            document.querySelectorAll(".timestamp").forEach(function(ts) {
-                ts.addEventListener("click", seekTimestamp);
-            });
             timestampContainer.classList.remove("hidden");
         }
+        document.querySelectorAll(".timestamp").forEach(function(ts) {
+            ts.addEventListener("click", seekTimestamp);
+        });
         tracklistButton.classList.remove("hidden");
     }
 }
@@ -296,7 +296,7 @@ function setPlaylist(){
     var h4 = document.createElement("h4");
     var h4node = document.createTextNode("Next up: ");
     h4.appendChild(h4node);
-    // playlistContainer.appendChild(h4);
+    playlistContainer.appendChild(h4);
     for(var i = 0; i < bgPage.playlist.length; i++){
         var p = document.createElement("p");
         p.classList.add("playlist-track");
@@ -402,7 +402,7 @@ function matchWildCard(str, rule) {
   return new RegExp("^" + rule.split("*").join(".*") + "$").test(str);
 }
 
-function nextSong(playlist){
+function nextSong(){
     (bgPage.indexPlaying >= (bgPage.playlist.length-1) ? bgPage.indexPlaying = 0 : bgPage.indexPlaying += 1);
     var message = bgPage.playlistURL;
     chrome.runtime.sendMessage(message, function(response){
@@ -416,7 +416,7 @@ function nextSong(playlist){
     });
 }
 
-function prevSong(playlist){
+function prevSong(){
     (bgPage.indexPlaying <= 0 ? bgPage.indexPlaying = (bgPage.playlist.length-1) : bgPage.indexPlaying -= 1);
     var message = bgPage.playlistURL;
     chrome.runtime.sendMessage(message, function(response){
