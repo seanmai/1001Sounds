@@ -173,7 +173,7 @@ function autofillSearch(){
         lastFocusedWindow: true
     }, function(tabs) {
         var tab = tabs[0];
-        if(matchWildCard(tab.url, "https://soundcloud.com/*/*") && (!matchWildCard(tab.url, "https://soundcloud.com/you/*")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/tracks")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/albums")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/sets")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/reposts"))){
+        if(matchWildCard(tab.url, "https://soundcloud.com/*/*") && (!matchWildCard(tab.url, "https://soundcloud.com/you/*")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/tracks")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/albums")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/sets")) && (!matchWildCard(tab.url, "https://soundcloud.com/*/reposts")) && (!matchWildCard(tab.url, "https://soundcloud.com/discover/*"))){
             inputURL.setAttribute("value", tab.url);
             inputURL.focus();
         }
