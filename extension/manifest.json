@@ -18,7 +18,7 @@
     "browser_action": {
         "default_popup": "index.html",
         "defualt_title": "1001Sounds",
-        "default_icon": "extension-icon.png"
+        "default_icon": "/assets/extension-icon.png"
     },
     "permissions": ["https://soundcloud.com/*"]
 }
