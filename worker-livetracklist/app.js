@@ -17,12 +17,14 @@ const puppeteer = require('puppeteer');
             // const tracklist = await page.$$('#TheList');
 
             const track = tracklist[i];
-            const trackString = track.innerText;
-            // const trackTime = await track$('span .time-item');
-            // const timeString = window.getComputedStyle(trackTime, ':before').content;
+            const trackName = await page.evaluate(track => track.innerText, track);
+            const trackStyle = await track.$('style');
+            let trackTime = await page.evaluate(trackStyle => trackStyle.innerText, trackStyle);
+            trackTime = trackTime.split('{content: "')[1]
+            trackTime = trackTime.split('"}')[0]
 
-            // console.log(trackString);
-            // console.log(timeString);
+            console.log(trackName);
+            console.log(trackTime);
         }
     } catch(e){
         console.log("main async function error:", e);

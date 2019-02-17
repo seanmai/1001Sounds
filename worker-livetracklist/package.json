@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+        "nodemon": "1.18.3",
+        "puppeteer": "1.12.2"
+    },
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon"
+    }
+}
