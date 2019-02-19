@@ -18,15 +18,13 @@ const puppeteer = require('puppeteer');
 
             const track = tracklist[i];
             // const trackName = await track.$eval('[itemprop="name"]', meta => meta.getAttribute("content"));
-            let trackName = await track.$eval('.tlToogleData', h2 => h2.innerText);
+            let trackName = await track.$eval('.tlToogleData', div => div.innerText);
             trackName = trackName.split(' [')[0]
             trackName = trackName.split('\n')[0]
-            // const trackStyle = await track.$('style');
-            // let trackTime = await page.evaluate(trackStyle => trackStyle.innerText, trackStyle);
-            // trackTime = trackTime.split('{content: "')[1]
-            // trackTime = trackTime.split('"}')[0]
+            let trackTime = await track.$eval('.cueValueField', div => div.innerText);
+
             console.log(trackName);
-            // console.log(trackTime);
+            console.log(trackTime);
         }
     } catch(e){
         console.log("main async function error:", e);
