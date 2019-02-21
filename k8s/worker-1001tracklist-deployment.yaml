@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: worker-1001tracklist-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: worker-1001tracklist
+    template:
+        metadata:
+            labels:
+                component: worker-1001tracklist
+        spec:
+            containers:
+                - name: worker-1001tracklist
+                  image: seanmai/1001sounds-worker-1001tracklist
+                  env:
+                      - name: PGUSER
+                        value: postgres
+                      - name: PGHOST
+                        value: postgres-cluster-ip-service
+                      - name: PGPORT
+                        value: '5432'
+                      - name: PGDATABASE
+                        value: postgres
+                      - name: PGPASSWORD #env secret set up in kubectl
+                        valueFrom:
+                            secretKeyRef:
+                                name: pgpassword
+                                key: PGPASSWORD
